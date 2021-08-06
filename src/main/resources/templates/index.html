@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>all about spring</title>
+    </head>
+    <body>
+        <h1>Hey <span th:text="${name}">Stranger</span></h1>
+        <div th:if="${login} == false">
+            <label>sign in</label>
+            <input id="inname" placeholder="username">
+            <input id="inpass" placeholder="password">
+            <input id="inremember" type="checkbox">
+            <button onclick="signin()">sign in</button>
+        </div>
+        <div th:if="${login} == false">
+            <label>sign up</label>
+            <input id="upname" placeholder="username">
+            <input id="uppass" placeholder="password">
+            <button onclick="signup()">sign up</button>
+        </div>
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+        <script>
+            function signin(){
+                var obj = new Object();
+                obj.name = document.getElementById("inname").value;
+                obj.password = document.getElementById("inname").value;
+                obj.remember = document.getElementById("inremember").checked;
+                if(obj.name == ""){
+                    Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Please enter your username',
+                    confirmButtonText: 'Ok'
+                    });
+                } else if(obj.password == ""){
+                    Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Please enter your password',
+                    confirmButtonText: 'Ok'
+                    });
+                } else{
+                    let timerInterval
+                    Swal.fire({
+                    title: 'Signing in',
+                    html: 'Please be patient',
+                    timer: 10000,
+                    timerProgressBar: true,
+                    didOpen: () => {
+                        Swal.showLoading()
+                        timerInterval = setInterval(() => {
+                        const content = Swal.getContent()
+                        if (content) {
+                            const b = content.querySelector('b')
+                            if (b) {
+                            b.textContent = Swal.getTimerLeft()
+                            }
+                        }
+                        }, 100)
+                    },
+                    willClose: () => {
+                        clearInterval(timerInterval)
+                    }
+                    }).then((result) => {
+                    /* Read more about handling dismissals below */
+                    if (result.dismiss === Swal.DismissReason.timer) {
+                        console.log('I was closed by the timer')
+                    }
+                    })
+                    var xhr = new XMLHttpRequest();
+                    xhr.onreadystatechange = function() {
+                        if (this.readyState != 4)
+                        return;
+
+                        if (this.status == 200) {
+                            var payload = JSON.parse(this.responseText);
+                            Swal.fire(
+                            'Successful',
+                            'You signed in successfully',
+                            'success',
+                            )
+                            document.cookie = "JSESSIONTOKEN=" + payload.jwt + ";expires=;";
+                            setInterval(function(){
+                                location.reload();
+                            }, 1000);
+                        }else if(this.status == 403){
+                            var payload = JSON.parse(this.responseText);
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'Username or password wrong!',
+                                confirmButtonText: 'Ok'
+                            })
+                        }else{
+                            Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Somethings went wrong! Contact support.',
+                            confirmButtonText: 'Ok'
+                            })
+                        }
+                    };
+                    xhr.open("POST",
+                    location.protocol + "//" + location.host + "/authenticate", true);
+                    xhr.setRequestHeader("Content-Type", "application/json");
+                    xhr.send(JSON.stringify(obj));
+                }
+            }
+
+            function signup(){
+                var obj = new Object();
+                obj.name = document.getElementById("upname").value;
+                obj.password = document.getElementById("upname").value;
+                if(obj.name == ""){
+                    Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Please enter your username',
+                    confirmButtonText: 'Ok'
+                    });
+                } else if(obj.password == ""){
+                    Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Please enter your password',
+                    confirmButtonText: 'Ok'
+                    });
+                } else{
+                    let timerInterval
+                    Swal.fire({
+                    title: 'Signing up',
+                    html: 'Please be patient',
+                    timer: 10000,
+                    timerProgressBar: true,
+                    didOpen: () => {
+                        Swal.showLoading()
+                        timerInterval = setInterval(() => {
+                        const content = Swal.getContent()
+                        if (content) {
+                            const b = content.querySelector('b')
+                            if (b) {
+                            b.textContent = Swal.getTimerLeft()
+                            }
+                        }
+                        }, 100)
+                    },
+                    willClose: () => {
+                        clearInterval(timerInterval)
+                    }
+                    }).then((result) => {
+                    /* Read more about handling dismissals below */
+                    if (result.dismiss === Swal.DismissReason.timer) {
+                        console.log('I was closed by the timer')
+                    }
+                    })
+                    var xhr = new XMLHttpRequest();
+                    xhr.onreadystatechange = function() {
+                        if (this.readyState != 4)
+                        return;
+
+                        if (this.status == 200) {
+                            var payload = JSON.parse(this.responseText);
+                            Swal.fire(
+                            'Successful',
+                            'You signed up successfully',
+                            'success'
+                            )
+                            setInterval(function(){
+                                location.reload();
+                            }, 1000);
+                        } else if(this.status == 404){
+                            var payload = JSON.parse(this.responseText);
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: payload.message,
+                                confirmButtonText: 'Ok'
+                            })
+                        } else if(this.status == 500){
+                            var payload = JSON.parse(this.responseText);
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: payload.message,
+                                confirmButtonText: 'Ok'
+                            })
+                        } else{
+                            Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Somethings went wrong! Contact support.',
+                            confirmButtonText: 'Ok'
+                            })
+                        }
+                    };
+                    xhr.open("POST",
+                    location.protocol + "//" + location.host + "/api/signup", true);
+                    xhr.setRequestHeader("Content-Type", "application/json");
+                    xhr.send(JSON.stringify(obj));
+                }
+            }
+        </script>
+    </body>
+</html>
