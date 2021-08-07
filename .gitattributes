@@ -1,1 +1,1 @@
-*.rb linguist-language=Java
+*.js linguist-language=Java
