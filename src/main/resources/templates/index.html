@@ -2,13 +2,48 @@
 <html>
     <head>
         <title>all about spring</title>
+
+        <script src="/lib/sockjs/sockjs.min.js"></script>
+        <script src="/lib/stomp/lib/stomp.min.js"></script>
+        <script>
+            window.onload = function() {
+                var socket = new SockJS(location.protocol + "//" + location.host
+                        + "/connect");
+                stompClient = Stomp.over(socket);
+                stompClient.debug = null;
+                stompClient.connect({}, function(frame) {
+                    stompClient.subscribe('/private/reply', function(notification) {
+                        responseHandler(notification.body);
+                    });
+                    stompClient.subscribe('/queue/public', function(notification) {
+                        responseHandler(notification.body);
+                    });
+                });
+            }
+
+            function responseHandler(data) {
+                console.log(data);
+                var obj = JSON.parse(data);
+                if (obj.status == 200) {
+                    if (obj.destination == "timer") {
+                        document.getElementById("timer").innerHTML = obj.data.time;
+                    } else if(obj.destination == "chat"){
+                        document.getElementById("chatbox").innerHTML = document.getElementById("chatbox").innerHTML + "<li>" + obj.data.from + ": " + obj.data.message + "</li>"
+                    }
+                }
+            }
+        </script>
     </head>
     <body>
-        <h1>Hey <span th:text="${name}">Stranger</span></h1>
+        <div>
+            <p>Server in running for <span id="timer">0</span> seconds</p>
+        </div>
+        <h1>Hey <span id="name" th:text="${name}">Stranger</span></h1>
         <div th:if="${login} == false">
             <label>sign in</label>
             <input id="inname" placeholder="username">
             <input id="inpass" placeholder="password">
+            <label>remember me</label>
             <input id="inremember" type="checkbox">
             <button onclick="signin()">sign in</button>
         </div>
@@ -18,8 +53,21 @@
             <input id="uppass" placeholder="password">
             <button onclick="signup()">sign up</button>
         </div>
+        <div th:if="${login}">
+            <ul id="chatbox">
+
+            </ul>
+            <input id="message" placeholder="Type to send message...">
+            <button onclick="sendMessage()">send</button>
+        </div>
         <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
         <script>
+            function sendMessage(){
+                var obj = new Object();
+                obj.from = document.getElementById("name").innerHTML;
+                obj.message = document.getElementById("message").value;
+                stompClient.send("/user/chat", {}, JSON.stringify(obj));
+            }
             function signin(){
                 var obj = new Object();
                 obj.name = document.getElementById("inname").value;

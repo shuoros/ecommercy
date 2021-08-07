@@ -29,7 +29,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 	@Autowired
 	private JwtUtil jwtUtil;
 
-	private static List<String> skipFilterUrls = Arrays.asList("/", "/api/signup", "/authenticate");
+	private static List<String> skipFilterUrls = Arrays.asList("/", "/api/signup", "/authenticate", "/connect/**", "/lib/**");
 
 	@Override
 	protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {

@@ -68,7 +68,6 @@ public class Application {
 
 	@PreDestroy
 	public void onExit() {
-		System.out.println("hey");
 		File file = new File(PATH);
 		try {
 			FileWriter outputfile = new FileWriter(file);

@@ -16,7 +16,7 @@ public class RestConfig {
 	public CORSFilter corsFilter() {
 		CorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		CorsConfiguration config = new CorsConfiguration();
-		config.addAllowedOrigin("https://cdn.collexa.style");
+		config.addAllowedOrigin("*");
 		config.addAllowedMethod(HttpMethod.DELETE);
 		config.addAllowedMethod(HttpMethod.GET);
 		config.addAllowedMethod(HttpMethod.OPTIONS);
