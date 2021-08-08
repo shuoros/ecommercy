@@ -52,7 +52,7 @@ in the `JwtRequestFilter` are ignored for authentication and hits the controller
 - `"/lib/**"` is for Stomp client js files.
 
 ## Spring Rest Service
-To implement a reset service system, a class must be implemented as a controller and receive requests for a URL path using `@PostMapping(path = "<PATH>", produces = MediaType.APPLICATION_JSON_VALUE)` annotation.
+To implement a rest service system, a class must be implemented as a controller and receive requests for a URL path using `@PostMapping(path = "<PATH>", produces = MediaType.APPLICATION_JSON_VALUE)` annotation.
 ```java
 @RestController
 @RequestMapping("/api")
@@ -74,7 +74,7 @@ public class APIController {
 
 
 ## Thymleaf
-To implement a reset service system, a class must be implemented as a controller and receive requests for a URL path using `@RequestMapping(<PATH>)` anotation.
+To implement Thymleaf template engine, a class must be implemented as a controller and receive requests for a URL path using `@RequestMapping(<PATH>)` anotation.
 ```java
 @Controller
 public class ResourceController {
