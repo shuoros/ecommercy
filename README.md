@@ -128,7 +128,7 @@ public class SocketEndpoints {
 
 Here, we can see that the method `configureMessageBroker` is used to configure the message broker. First, we enable an in-memory message broker to carry the messages back to the client on destinations prefixed with `"/reply"`.
 
-The `"/queue"` prefix is for public masseging. The messages that the server puts on this path are sent to all the clients that are subscribed on this path.
+The `"/queue"` prefix is for public messaging. The messages that the server puts on this path are sent to all the clients that are subscribed on this path.
 
 We complete our configuration by designating the `"/private"` prefix to filter destinations targeting application annotated methods (via `@MessageMapping`).
 The `registerStompEndpoints` method registers the `"/connect"` and `"/user"` endpoint, enabling **Spring’s STOMP support**.
