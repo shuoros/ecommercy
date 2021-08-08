@@ -18,6 +18,14 @@ import org.springframework.stereotype.Controller;
 
 import io.github.shuoros.allAboutSpring.socket.SocketEndpoints;
 
+/**
+ * This class is the web socket controller and the web socket handlers are
+ * implemented in this class.
+ * 
+ * @author Soroush Mehrad
+ * @version 1.0.0
+ * @since 2021-08-08
+ */
 @Controller
 public class SocketController {
 
@@ -30,9 +38,16 @@ public class SocketController {
 		this.messagingTemplate = messagingTemplate;
 	}
 
+	/**
+	 * In this class, a thread is implemented that starts counting the seconds from
+	 * the start of the application and sends each second to subscribed clients.
+	 * 
+	 * @param e {@link org.springframework.boot.context.event.ApplicationReadyEvent}
+	 * @since v1.0.0
+	 */
 	@EventListener
 	@Async
-	public void crashServer(ApplicationReadyEvent e) {
+	public void timer(ApplicationReadyEvent e) {
 		new Thread(new Runnable() {
 
 			@Override
@@ -55,6 +70,14 @@ public class SocketController {
 		}).start();
 	}
 
+	/**
+	 * Receives a message from a client and sends it to other subscribed clients.
+	 *
+	 * @param payload   Client's message.
+	 * @param principal Contains client's session.
+	 * @throws Exception Catches any exception that could ever happened.
+	 * @since v1.0.0
+	 */
 	@MessageMapping(SocketEndpoints.ENDPOINT_USER + "/chat")
 	public void chat(Message<Object> message, @Payload String payload, Principal principal) throws Exception {
 		String session = principal.getName();

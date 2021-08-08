@@ -16,7 +16,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -25,6 +24,16 @@ import io.github.shuoros.allAboutSpring.util.JwtUtil;
 import io.github.shuoros.allAboutSpring.util.PasswordEncoder;
 import io.github.shuoros.allAboutSpring.util.UserDetailService;
 
+/**
+ * This class is responsible for user authentication and is an interface for the
+ * functions and settings implemented
+ * {@link io.github.shuoros.allAboutSpring.util.UserDetailService} and
+ * {@link io.github.shuoros.allAboutSpring.config.SecurityConfig}
+ * 
+ * @author Soroush Mehrad
+ * @version 1.0.0
+ * @since 2021-08-08
+ */
 @Controller
 public class AuthenticateController {
 
@@ -39,15 +48,38 @@ public class AuthenticateController {
 	@Autowired
 	private UserDetailService userDetailService;
 
+	/**
+	 * It uses <code>authenticationManager</code> to authenticate the user by its
+	 * username and password. If the given username and password are incorrect, a
+	 * <code>BadCredentialsException</code> will be throwed. If the username and
+	 * password are correct, a JWT will be created for the client and returned to
+	 * it.
+	 * 
+	 * @param request Client's device info.
+	 * @param payload Client's message that contains username and password.
+	 * @return A <code>ResponseEntity</code> that contains a string and http
+	 *         status code.
+	 * @throws Exception {@link org.springframework.security.authentication.BadCredentialsException}
+	 * @since v1.0.0
+	 */
 	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
-	public ResponseEntity<?> authenticate(@RequestHeader String host, HttpServletRequest request,
-			@RequestBody String payload) throws Exception {
+	public ResponseEntity<?> authenticate(HttpServletRequest request, @RequestBody String payload) throws Exception {
 		JSONObject data = new JSONObject(payload);
 		data.put("name", data.getString("name").toLowerCase());
+		/**
+		 * Checks if user exists.
+		 * 
+		 * @since v1.0.0
+		 */
 		if (Application.getUsers().containsKey(data.getString("name"))) {
 			log.info("<=== handleAuthenticateAPI: username=" + data.getString("name") + " password="
 					+ data.getString("password") + " ip=" + request.getRemoteAddr() + ", user agent="
 					+ request.getHeader("User-Agent"));
+			/**
+			 * Authenticate user with username and password.
+			 * 
+			 * @since v1.0.0
+			 */
 			try {
 				authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(data.getString("name"),
 						new PasswordEncoder(data.getString("password"), data.getString("name")).encode()));
@@ -62,7 +94,11 @@ public class AuthenticateController {
 			final UserDetails userDetails = userDetailService.loadUserByUsername(data.getString("name"));
 
 			String jwt;
-
+			/**
+			 * Generate JWT for client.
+			 * 
+			 * @since v1.0.0
+			 */
 			if (data.getBoolean("remember")) {
 				jwt = jwtTokenUtil.generateInfToken(userDetails);
 			} else {

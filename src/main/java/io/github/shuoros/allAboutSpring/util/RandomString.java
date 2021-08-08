@@ -4,10 +4,21 @@ import java.security.SecureRandom;
 import java.util.Objects;
 import java.util.Random;
 
+/**
+ * This class generates random strings of arbitrary length from numbers,
+ * lowercase letters, and uppercase letters.
+ * 
+ * @author Soroush Mehrad
+ * @version 1.0.0
+ * @since 2021-08-08
+ */
 public class RandomString {
 
 	/**
 	 * Generate a random string.
+	 * 
+	 * @return Generated random string.
+	 * @since v1.0.0
 	 */
 	public String nextString() {
 		for (int idx = 0; idx < buf.length; ++idx)
@@ -41,6 +52,10 @@ public class RandomString {
 
 	/**
 	 * Create an alphanumeric string generator.
+	 * 
+	 * @param length The desired length to generate a random string.
+	 * @param random A <code>Random</code> class to generate random ints.
+	 * @since v1.0.0
 	 */
 	public RandomString(int length, Random random) {
 		this(length, random, alphanum);
@@ -48,6 +63,9 @@ public class RandomString {
 
 	/**
 	 * Create an alphanumeric strings from a secure generator.
+	 * 
+	 * @param length The desired length to generate a random string.
+	 * @since v1.0.0
 	 */
 	public RandomString(int length) {
 		this(length, new SecureRandom());

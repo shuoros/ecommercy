@@ -7,6 +7,14 @@ import java.security.spec.KeySpec;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 
+/**
+ * This class takes the password and salt and hashes them with the
+ * PBKDF2WithHmacSHA512 algorithm.
+ * 
+ * @author Soroush Mehrad
+ * @version 1.0.0
+ * @since 2021-08-08
+ */
 public class PasswordEncoder {
 
 	private String password;
