@@ -1,5 +1,5 @@
 # All about Spring
-### This repository contains all the knowledge I have and all the things I can do with Spring
+### A reference set of implementations of Spring functions and features
 **You can download v1.0.0 java-doc [here](https://github.com/shuoros/all-about-spring/raw/main/apidocs/javadoc.zip)**
 
 In this repository, a spring boot application has been implemented that has a registration and login system. After logging in, you can use a public chat system that sends your message to all online sessions. You can also view and reply to messages from other sessions.
