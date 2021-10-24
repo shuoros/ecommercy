@@ -1,0 +1,18 @@
+{
+  "properties": [
+    {
+      "name": "admin.password",
+      "type": "java.lang.String",
+      "description": "admin cred."
+    },
+    {
+      "name": "admin.username",
+      "type": "java.lang.String",
+      "description": "admin cred."
+    },
+    {
+      "name": "default.cv.users.path",
+      "type": "java.lang.String",
+      "description": "Description for default.cv.users.path."
+    }
+  ] }

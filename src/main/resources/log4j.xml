@@ -1,0 +1,5 @@
+<root>
+    <level value="INFO" />
+    <appender-ref ref="CONSOLE" />
+    <appender-ref ref="FILE" />
+</root>

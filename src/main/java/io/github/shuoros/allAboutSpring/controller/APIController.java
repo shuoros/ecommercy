@@ -6,10 +6,12 @@ import java.security.spec.InvalidKeySpecException;
 
 import javax.servlet.http.HttpServletRequest;
 
+import io.github.shuoros.allAboutSpring.model.dbs.UserRepositorySQL;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.github.shuoros.allAboutSpring.Application;
-import io.github.shuoros.allAboutSpring.model.User;
+import io.github.shuoros.allAboutSpring.model.schema.User;
 import io.github.shuoros.allAboutSpring.util.PasswordEncoder;
 
 /**
@@ -37,6 +39,8 @@ import io.github.shuoros.allAboutSpring.util.PasswordEncoder;
 @RequestMapping("/api")
 public class APIController {
 
+	@Autowired
+	UserRepositorySQL userRepositorySQL;
 	private static final Logger log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
 	/**
@@ -95,7 +99,7 @@ public class APIController {
 		 * 
 		 * @since 1.0.0
 		 */
-		if (Application.getUsers().containsKey(data.getString("name"))) {
+		if (userRepositorySQL.existsById(data.getString("name"))) {
 			response.put("ok", false);
 			response.put("status", 400);
 			response.put("message", "A user with this name exist!");
@@ -123,7 +127,7 @@ public class APIController {
 		 * 
 		 * @since 1.0.0
 		 */
-		Application.addUser(user.getName(), user.getPassword());
+		userRepositorySQL.save(new User(user.getUserName(), user.getPassword()));
 		response.put("ok", true);
 		response.put("status", 200);
 		response.put("message", "User added");

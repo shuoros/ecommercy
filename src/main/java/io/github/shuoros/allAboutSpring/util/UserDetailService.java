@@ -1,7 +1,11 @@
 package io.github.shuoros.allAboutSpring.util;
 
 import java.util.ArrayList;
+import java.util.function.Supplier;
 
+import io.github.shuoros.allAboutSpring.model.dbs.UserRepositorySQL;
+import io.github.shuoros.allAboutSpring.model.schema.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -21,6 +25,8 @@ import io.github.shuoros.allAboutSpring.Application;
 @Service
 public class UserDetailService implements UserDetailsService {
 
+	@Autowired
+	UserRepositorySQL repositorySQL;
 	/**
 	 * Takes a username and returns their password for authentication.
 	 * 
@@ -31,8 +37,13 @@ public class UserDetailService implements UserDetailsService {
 	 */
 	@Override
 	public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-		return new org.springframework.security.core.userdetails.User(userName, Application.getUsers().get(userName),
-				new ArrayList<>());
+		User queriedUser = repositorySQL.findById(userName).orElseThrow(() -> new UsernameNotFoundException(userName));
+
+		return new org.springframework.security.core.userdetails.User(
+				queriedUser.getUserName(),
+				queriedUser.getPassword(),
+				new ArrayList<>()
+		);
 	}
 
 }

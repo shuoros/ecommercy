@@ -4,6 +4,7 @@ import java.lang.invoke.MethodHandles;
 
 import javax.servlet.http.HttpServletRequest;
 
+import io.github.shuoros.allAboutSpring.model.dbs.UserRepositorySQL;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,6 +49,9 @@ public class AuthenticateController {
 	@Autowired
 	private UserDetailService userDetailService;
 
+	@Autowired
+	UserRepositorySQL userRepositorySQL;
+
 	/**
 	 * It uses <code>authenticationManager</code> to authenticate the user by its
 	 * username and password. If the given username and password are incorrect, a
@@ -71,7 +75,7 @@ public class AuthenticateController {
 		 * 
 		 * @since v1.0.0
 		 */
-		if (Application.getUsers().containsKey(data.getString("name"))) {
+		if (userRepositorySQL.existsById(data.getString("name"))) {
 			log.info("<=== handleAuthenticateAPI: username=" + data.getString("name") + " password="
 					+ data.getString("password") + " ip=" + request.getRemoteAddr() + ", user agent="
 					+ request.getHeader("User-Agent"));
