@@ -1,6 +1,7 @@
 package io.github.shuoros.ecommercy.dao;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import io.github.shuoros.ecommercy.dao.util.StringListConverter;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -33,7 +34,7 @@ public class Admin {
     private String password;
 
     @Builder.Default
-    @ElementCollection
+    @Convert(converter = StringListConverter.class)
     private List<String> roles = List.of("ADMIN");
 
     @Column(nullable = false, updatable = false)
