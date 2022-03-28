@@ -42,8 +42,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http//
-                .authorizeRequests()
-                .antMatchers("/api/**").permitAll()//
+                // TODO: Remember to re enable csrf
+                // https://spring.io/blog/2013/08/21/spring-security-3-2-0-rc1-highlights-csrf-protection/
+                .csrf().disable()//
+                .authorizeRequests()//
+                .antMatchers("/favicon.ico", "/error", "/authenticate", "/api/**").permitAll()//
                 .antMatchers("/admin/**").hasAnyAuthority("ADMIN")//
                 .antMatchers("/user/**").hasAnyAuthority("USER")//
                 .anyRequest().authenticated()//
