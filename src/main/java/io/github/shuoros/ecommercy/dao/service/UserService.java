@@ -22,7 +22,7 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public Optional<User> getUser(String email) {
+    public Optional<User> get(String email) {
         return userRepository.findByEmail(email);
     }
 
