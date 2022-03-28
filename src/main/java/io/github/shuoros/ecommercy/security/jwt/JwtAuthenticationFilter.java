@@ -57,8 +57,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             } catch (SignatureException e) {
                 log.error("Authentication Failed. Name or Password not valid.");
             }
-        } else {
-            log.info("Couldn't find bearer string, header will be ignored");
         }
         if (name != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = userDetailsService.loadUserByUsername(name);
@@ -67,7 +65,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 UsernamePasswordAuthenticationToken authentication = jwtTokenUtil.getAuthenticationToken(authToken,
                         SecurityContextHolder.getContext().getAuthentication(), userDetails);
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(req));
-                log.info("authenticated user " + name + ", setting security context");
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         }
