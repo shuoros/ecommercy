@@ -30,13 +30,12 @@ public class AdminController {
     @Async
     public void initAdmin(ApplicationReadyEvent e) {
         if (adminService.all().size() == 0) {
-            String[] roles = {"ADMIN"};
+            String[] roles = {"ADMIN", "ROOT"};
             adminService.create(Admin.builder()//
+                    .name("root")//
                     .email("admin@ecommercy.app")//
                     .password(new BCryptPasswordEncoder().encode("1234"))//
                     .roles(Arrays.asList(roles))//
-                    .createdAt(new Date())//
-                    .updatedAt(new Date())//
                     .build());
             log.info("Admin initialized ...");
         } else
