@@ -28,6 +28,9 @@ public class User {
     private Long id;
 
     @NotBlank
+    private String name;
+
+    @NotBlank
     private String email;
 
     @NotBlank
@@ -37,14 +40,16 @@ public class User {
     @Convert(converter = StringListConverter.class)
     private List<String> roles = List.of("USER");
 
+    @Builder.Default
     @Column(nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     @CreatedDate
-    private Date createdAt;
+    private Date createdAt = new Date();
 
+    @Builder.Default
     @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     @LastModifiedDate
-    private Date updatedAt;
+    private Date updatedAt = new Date();
 
 }
