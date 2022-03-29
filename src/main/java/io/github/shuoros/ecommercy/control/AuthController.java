@@ -27,14 +27,17 @@ public class AuthController {
 
     private final AuthenticationManager authenticationManager;
     private final Jwt jwtTokenUtil;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final UserService userService;
     private final AdminService adminService;
 
     @Autowired
     public AuthController(AuthenticationManager authenticationManager,//
-                          Jwt jwtTokenUtil, UserService userService, AdminService adminService) {
+                          Jwt jwtTokenUtil, BCryptPasswordEncoder bCryptPasswordEncoder,//
+                          UserService userService, AdminService adminService) {
         this.authenticationManager = authenticationManager;
         this.jwtTokenUtil = jwtTokenUtil;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.userService = userService;
         this.adminService = adminService;
     }
@@ -70,7 +73,7 @@ public class AuthController {
             userService.create(User.builder()//
                     .name(request.getString("name"))//
                     .email(request.getString("email"))//
-                    .password(new BCryptPasswordEncoder().encode(request.getString("password"))).build());
+                    .password(bCryptPasswordEncoder.encode(request.getString("password"))).build());
             return Response.success("Signup completed successfully!", HttpStatus.OK).serialize();
         } catch (Exception e) {
             return Response.error("Signup failed!", HttpStatus.INTERNAL_SERVER_ERROR).serialize();
