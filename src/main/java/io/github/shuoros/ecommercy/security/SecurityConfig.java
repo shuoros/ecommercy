@@ -1,6 +1,7 @@
 package io.github.shuoros.ecommercy.security;
 
-import io.github.shuoros.ecommercy.security.jwt.JwtAuthenticationFilter;
+import io.github.shuoros.ecommercy.security.filter.ExceptionHandlerFilter;
+import io.github.shuoros.ecommercy.security.filter.JwtAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,11 +28,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UnauthorizedEntryPoint unauthorizedEntryPoint;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final ExceptionHandlerFilter exceptionHandlerFilter;
 
     @Autowired
-    public SecurityConfig(UnauthorizedEntryPoint unauthorizedEntryPoint, JwtAuthenticationFilter jwtAuthenticationFilter) {
+    public SecurityConfig(UnauthorizedEntryPoint unauthorizedEntryPoint, JwtAuthenticationFilter jwtAuthenticationFilter,//
+                          ExceptionHandlerFilter exceptionHandlerFilter) {
         this.unauthorizedEntryPoint = unauthorizedEntryPoint;
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
+        this.exceptionHandlerFilter = exceptionHandlerFilter;
     }
 
     @Override
@@ -55,6 +59,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()//
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(exceptionHandlerFilter, JwtAuthenticationFilter.class);
     }
 
     @Bean

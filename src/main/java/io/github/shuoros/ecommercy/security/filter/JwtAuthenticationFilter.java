@@ -1,7 +1,6 @@
-package io.github.shuoros.ecommercy.security.jwt;
+package io.github.shuoros.ecommercy.security.filter;
 
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.SignatureException;
+import io.github.shuoros.ecommercy.security.jwt.Jwt;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -48,15 +47,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String authToken = null;
         if (header != null && header.startsWith(TOKEN_PREFIX)) {
             authToken = header.replace(TOKEN_PREFIX, "");
-            try {
-                name = jwtTokenUtil.getUsernameFromToken(authToken);
-            } catch (IllegalArgumentException e) {
-                log.error("An error occurred while fetching name from Token");
-            } catch (ExpiredJwtException e) {
-                log.info("The token has expired");
-            } catch (SignatureException e) {
-                log.error("Authentication Failed. Name or Password not valid.");
-            }
+            name = jwtTokenUtil.getUsernameFromToken(authToken);
         }
         if (name != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = userDetailsService.loadUserByUsername(name);
