@@ -14,12 +14,12 @@ public class Request {
         return json;
     }
 
-    public static boolean hasKeys(JSONObject request, String... keys) {
+    public static boolean notHasKeys(JSONObject request, String... keys) {
         for (String key : keys)
             if (!request.has(key))
-                return false;
+                return true;
 
-        return true;
+        return false;
     }
 
 }
