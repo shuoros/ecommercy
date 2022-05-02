@@ -1,6 +1,6 @@
 package io.github.shuoros.ecommercy.security.filter;
 
-import io.github.shuoros.ecommercy.control.util.ApiError;
+import io.github.shuoros.ecommercy.control.util.Response;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.SignatureException;
 import lombok.extern.slf4j.Slf4j;
@@ -30,7 +30,7 @@ public class ExceptionHandlerFilter extends OncePerRequestFilter {
             setErrorResponse(HttpStatus.UNAUTHORIZED, request, res, "The token has expired!");
         } catch (SignatureException e) {
             log.error("SignatureException: {}", e.getMessage());
-            setErrorResponse(HttpStatus.UNAUTHORIZED, request, res, "Authentication Failed. Name or Password not valid!");
+            setErrorResponse(HttpStatus.UNAUTHORIZED, request, res, "Invalid token!");
         } catch (RuntimeException e) {
             log.error("RuntimeException: {}", e.getMessage());
             setErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, request, res, "Unexpected error!");
@@ -40,9 +40,8 @@ public class ExceptionHandlerFilter extends OncePerRequestFilter {
     public void setErrorResponse(HttpStatus status, HttpServletRequest req, HttpServletResponse res, String message) {
         res.setStatus(status.value());
         res.setContentType("application/json");
-        ApiError apiError = new ApiError(status, req.getRequestURI(), message);
         try {
-            res.getWriter().write(apiError.convertToJson());
+            res.getWriter().write(Response.error(message, status, req.getRequestURI()).toJson());
         } catch (IOException e) {
             e.printStackTrace();
         }
