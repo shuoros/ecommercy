@@ -19,30 +19,30 @@ import java.io.IOException;
 public class ExceptionHandlerFilter extends OncePerRequestFilter {
 
     @Override
-    public void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    public void doFilterInternal(HttpServletRequest request, HttpServletResponse res, FilterChain chain) throws ServletException, IOException {
         try {
-            filterChain.doFilter(request, response);
+            chain.doFilter(request, res);
         } catch (IllegalArgumentException e) {
             log.error("IllegalArgumentException: {}", e.getMessage());
-            setErrorResponse(HttpStatus.UNAUTHORIZED, request, response, "An error occurred while fetching name from Token!");
+            setErrorResponse(HttpStatus.UNAUTHORIZED, request, res, "An error occurred while fetching name from Token!");
         } catch (ExpiredJwtException e) {
             log.error("JwtException: {}", e.getMessage());
-            setErrorResponse(HttpStatus.UNAUTHORIZED, request, response, "The token has expired!");
+            setErrorResponse(HttpStatus.UNAUTHORIZED, request, res, "The token has expired!");
         } catch (SignatureException e) {
             log.error("SignatureException: {}", e.getMessage());
-            setErrorResponse(HttpStatus.UNAUTHORIZED, request, response, "Authentication Failed. Name or Password not valid!");
+            setErrorResponse(HttpStatus.UNAUTHORIZED, request, res, "Authentication Failed. Name or Password not valid!");
         } catch (RuntimeException e) {
             log.error("RuntimeException: {}", e.getMessage());
-            setErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, request, response, "Unexpected error!");
+            setErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, request, res, "Unexpected error!");
         }
     }
 
-    public void setErrorResponse(HttpStatus status, HttpServletRequest request, HttpServletResponse response, String message) {
-        response.setStatus(status.value());
-        response.setContentType("application/json");
-        ApiError apiError = new ApiError(status, request.getRequestURI(), message);
+    public void setErrorResponse(HttpStatus status, HttpServletRequest req, HttpServletResponse res, String message) {
+        res.setStatus(status.value());
+        res.setContentType("application/json");
+        ApiError apiError = new ApiError(status, req.getRequestURI(), message);
         try {
-            response.getWriter().write(apiError.convertToJson());
+            res.getWriter().write(apiError.convertToJson());
         } catch (IOException e) {
             e.printStackTrace();
         }
