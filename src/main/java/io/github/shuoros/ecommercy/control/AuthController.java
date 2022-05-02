@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+
 @RestController
 @Slf4j
 public class AuthController {
@@ -42,33 +44,24 @@ public class AuthController {
         this.adminService = adminService;
     }
 
-    @PostMapping(value = "/authenticate", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> authenticate(@RequestBody String payload) {
+    @PostMapping(value = "/authenticate/admin", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> authenticateAdmin(HttpServletRequest req, @RequestBody String payload) {
         final JSONObject request = Request.deserialize(payload);
-        if (request == null)
-            return Response.error("JSON syntax error!", HttpStatus.BAD_REQUEST).serialize();
+        final String token = authCredentials(request);
+        return Response.success("Authentication completed successfully!", token, HttpStatus.OK).serialize();
 
-        try {
-            final String token = authCredentials(request);
-            return Response.success("Authentication completed successfully!", token, HttpStatus.OK).serialize();
-        } catch (Exception e) {
-            return Response.error("Authentication failed! Given email or password may be wrong!", HttpStatus.UNAUTHORIZED).serialize();
-        }
+    }
+
+    @PostMapping(value = "/authenticate/user", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> authenticateUser(HttpServletRequest req, @RequestBody String payload) {
+        final JSONObject request = Request.deserialize(payload);
+        final String token = authCredentials(request);
+        return Response.success("Authentication completed successfully!", token, HttpStatus.OK).serialize();
     }
 
     @PostMapping(value = "/signup", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> signup(@RequestBody String payload) {
+    public ResponseEntity<String> signup(HttpServletRequest req, @RequestBody String payload) {
         final JSONObject request = Request.deserialize(payload);
-        if (request == null)
-            return Response.error("JSON syntax error!", HttpStatus.BAD_REQUEST).serialize();
-
-        if (!Request.hasKeys(request, "email", "password", "name"))
-            return Response.error("Missed name, email or password!", HttpStatus.UNPROCESSABLE_ENTITY).serialize();
-
-        if (userService.get(request.getString("email")).isPresent()//
-                || adminService.get(request.getString("email")).isPresent())
-            return Response.error("User with such email already exists!", HttpStatus.CONFLICT).serialize();
-
         try {
             userService.create(User.builder()//
                     .name(request.getString("name"))//
@@ -83,7 +76,7 @@ public class AuthController {
     private String authCredentials(JSONObject json) {
         final Authentication authentication = authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(//
-                        json.getString("email"), //
+                        json.getString("username"), //
                         json.getString("password")));
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
