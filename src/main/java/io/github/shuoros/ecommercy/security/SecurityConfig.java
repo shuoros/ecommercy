@@ -50,9 +50,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // https://spring.io/blog/2013/08/21/spring-security-3-2-0-rc1-highlights-csrf-protection/
                 .csrf().disable()//
                 .authorizeRequests()//
-                .antMatchers("/favicon.ico", "/error", "/authenticate", "/signup", "/api/**").permitAll()//
+                .antMatchers("/graphiql").hasAnyAuthority("ROOT")//
+                .antMatchers("/root/**").hasAnyAuthority("ROOT")//
                 .antMatchers("/admin/**").hasAnyAuthority("ADMIN")//
                 .antMatchers("/user/**").hasAnyAuthority("USER")//
+                .antMatchers("/**").permitAll()//
                 .anyRequest().authenticated()//
                 .and()//
                 .exceptionHandling().authenticationEntryPoint(unauthorizedEntryPoint)//
