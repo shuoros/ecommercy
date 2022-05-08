@@ -1,0 +1,24 @@
+scalar Long
+scalar Double
+
+type Product {
+    id: ID!
+    name: String!
+    description: String
+    price: Double!
+    discount: Double
+    point: Int
+    inventory: Int!
+    thumbnail: String!
+    images: [String]
+    comments: [Comment]
+}
+
+type Query {
+    findAllProducts: [Product]!
+    countProducts: Long!
+}
+
+type Mutation {
+    createProduct(name: String!, price: Double!, inventory: String!): Product!
+}
