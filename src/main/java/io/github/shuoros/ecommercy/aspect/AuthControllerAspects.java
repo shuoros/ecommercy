@@ -58,17 +58,6 @@ public class AuthControllerAspects {
             throw new UsernameNotFoundException("Invalid username or password!");
     }
 
-    @Before(value = "execution(* io.github.shuoros.ecommercy.control.AuthController.signup(..)) && args(request, payload)",//
-            argNames = "joinPoint,request,payload")
-    public void beforeSignup(JoinPoint joinPoint, HttpServletRequest request, String payload) {
-        final JSONObject json = Request.deserialize(payload);
-        if (json == null) throw new PayloadException("JSON syntax error!");
-        if (Request.notHasKeys(json, "email", "password", "name"))
-            throw new PayloadException("Missing name, email or password!", HttpStatus.UNPROCESSABLE_ENTITY);
-        if (userService.get(json.getString("email")).isPresent())
-            throw new PayloadException("User with such email already exists!", HttpStatus.CONFLICT);
-    }
-
     private void logRequest(JoinPoint joinPoint, HttpServletRequest request, String payload) {
         log.info("{}: request: {}, ip: {}, user-agent: {}\n{}",//
                 joinPoint.toShortString(),//
