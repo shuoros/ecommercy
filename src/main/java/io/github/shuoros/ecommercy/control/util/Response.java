@@ -3,7 +3,6 @@ package io.github.shuoros.ecommercy.control.util;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -12,9 +11,12 @@ import com.fasterxml.jackson.datatype.jsr310.ser.ZonedDateTimeSerializer;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.SneakyThrows;
-import lombok.ToString;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
 import java.time.ZonedDateTime;
 
@@ -123,7 +125,10 @@ public class Response {
     }
 
     public ResponseEntity<String> serialize() {
-        return new ResponseEntity<>(toJson(), HttpStatus.valueOf(this.status));
+        MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
+        headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+
+        return new ResponseEntity<>(toJson(), headers, HttpStatus.valueOf(this.status));
     }
 
     @SneakyThrows
