@@ -11,7 +11,6 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
 
@@ -24,7 +23,6 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
 public class User {
 
     @Id
@@ -33,24 +31,24 @@ public class User {
     @Column(updatable = false, nullable = false, columnDefinition = "VARCHAR(255)")
     private String id;
 
-    @NotNull
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String email;
 
     @Column(unique = true)
     private String phoneNumber;
 
-    @NotNull
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @Column(nullable = false)
     private String password;
 
-    @NotNull
+    @Column(nullable = false)
     private String name;
 
     private String lastName;
 
     @OneToMany(mappedBy = "user")
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    @ToString.Exclude
     private List<Address> addresses;
 
     @OneToOne(mappedBy = "user")
@@ -58,21 +56,23 @@ public class User {
     private Basket basket;
 
     @Builder.Default
-    @NotNull
+    @Column(nullable = false)
     private int points = 0;
 
     @OneToMany(mappedBy = "user")
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    @ToString.Exclude
     private List<Comment> comments;
 
     @Builder.Default
     @Convert(converter = StringListConverter.class)
+    @Column(updatable = false)
     private List<String> roles = List.of("USER");
 
     @Builder.Default
-    @Column(nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     @CreatedDate
+    @Column(nullable = false, updatable = false)
     private Date createdAt = new Date();
 
     @Builder.Default
