@@ -3,7 +3,7 @@ package io.github.shuoros.ecommercy.dao.event;
 import io.github.shuoros.ecommercy.dao.Basket;
 import io.github.shuoros.ecommercy.dao.User;
 import io.github.shuoros.ecommercy.dao.repository.BasketRepository;
-import io.github.shuoros.ecommercy.dao.service.UserService;
+import io.github.shuoros.ecommercy.dao.repository.UserRepository;
 import io.github.shuoros.ecommercy.exception.PayloadException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.core.annotation.HandleAfterCreate;
@@ -20,14 +20,14 @@ import java.util.regex.Pattern;
 @Component
 public class UserEventHandler {
 
-    private final UserService userService;
+    private final UserRepository userRepository;
     private final BasketRepository basketRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public UserEventHandler(UserService userService, BasketRepository basketRepository,//
+    public UserEventHandler(UserRepository userRepository, BasketRepository basketRepository,//
                             BCryptPasswordEncoder bCryptPasswordEncoder) {
-        this.userService = userService;
+        this.userRepository = userRepository;
         this.basketRepository = basketRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
@@ -36,7 +36,7 @@ public class UserEventHandler {
     public void handleBeforeCreate(final User user) {
         if (user.getName() == null || user.getEmail() == null || user.getPassword() == null)
             throw new PayloadException("Missing name, email or password!", HttpStatus.UNPROCESSABLE_ENTITY);
-        if (userService.get(user.getEmail()).isPresent())
+        if (userRepository.findByEmail(user.getEmail()).isPresent())
             throw new PayloadException("User with such email already exists!", HttpStatus.CONFLICT);
         if (!isValidPassword(user.getPassword()))
             throw new PayloadException("Your password is not compatible! Consider choosing password with " +
