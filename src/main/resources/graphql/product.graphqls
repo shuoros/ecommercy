@@ -1,12 +1,11 @@
 scalar Long
-scalar Double
 
 type Product {
     id: ID!
     name: String!
     description: String
-    price: Double!
-    discount: Double
+    price: Float!
+    discount: Float
     point: Int
     inventory: Int!
     thumbnail: String!
