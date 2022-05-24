@@ -6,7 +6,6 @@ import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "ADDRESSES", schema = "ecommercy")
@@ -29,33 +28,30 @@ public class Address {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
-    @NotNull
     @OneToOne
-    @JoinColumn(name = "country_id", referencedColumnName = "id")
+    @JoinColumn(name = "country_id", referencedColumnName = "id", nullable = false)
     private Country country;
 
-    @NotNull
     @OneToOne
-    @JoinColumn(name = "state_id", referencedColumnName = "id")
+    @JoinColumn(name = "state_id", referencedColumnName = "id", nullable = false)
     private State state;
 
-    @NotNull
     @OneToOne
-    @JoinColumn(name = "city_id", referencedColumnName = "id")
+    @JoinColumn(name = "city_id", referencedColumnName = "id", nullable = false)
     private City city;
 
-    @NotNull
+    @Column(nullable = false)
     private String addressLine1;
 
     private String addressLine2;
 
-    @NotNull
+    @Column(nullable = false)
     private String building;
 
-    @NotNull
+    @Column(nullable = false)
     private String zipCode;
 
-    @NotNull
+    @Column(nullable = false)
     private String houseNumber;
 
 }
