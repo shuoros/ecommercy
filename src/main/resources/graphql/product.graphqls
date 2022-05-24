@@ -11,14 +11,9 @@ type Product {
     inventory: Int!
     thumbnail: String!
     images: [String]
-    comments: [Comment]
 }
 
 type Query {
     findAllProducts: [Product]!
     countProducts: Long!
-}
-
-type Mutation {
-    createProduct(name: String!, price: Double!, inventory: String!): Product!
 }
