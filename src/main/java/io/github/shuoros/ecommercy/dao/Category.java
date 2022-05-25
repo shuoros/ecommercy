@@ -1,16 +1,16 @@
 package io.github.shuoros.ecommercy.dao;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 @Entity
-@Table(name = "categories", schema = "ecommercy")
+@Table(name = "CATEGORIES", schema = "ecommercy")
 @EntityListeners(AuditingEntityListener.class)
-@JsonIgnoreProperties(value = {"createdAt", "updatedAt"}, allowGetters = true)
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -19,10 +19,22 @@ import javax.validation.constraints.NotBlank;
 public class Category {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
+    @Column(updatable = false, nullable = false, columnDefinition = "VARCHAR(255)")
+    private String id;
 
-    @NotBlank
+    @Column(nullable = false)
     private String name;
+
+    private String description;
+
+    @ManyToOne
+    @JoinColumn(name = "group_id", referencedColumnName = "id", nullable = false)
+    private Group group;
+
+    @ManyToMany(mappedBy = "categories")
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    private List<Product> products;
 
 }
