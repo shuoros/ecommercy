@@ -8,8 +8,6 @@ type Product {
     discount: Float
     point: Int
     inventory: Int!
-    thumbnail: String!
-    images: [String]
 }
 
 type Query {
