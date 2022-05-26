@@ -54,7 +54,7 @@ public class AuthControllerAspects {
         if (json == null) throw new PayloadException("JSON syntax error!");
         if (Request.notHasKeys(json, "username", "password"))
             throw new PayloadException("Missing username or password!", HttpStatus.UNPROCESSABLE_ENTITY);
-        if (userRepository.findByEmail(json.getString("username")).isPresent())
+        if (userRepository.findByEmail(json.getString("username")).isEmpty())
             throw new UsernameNotFoundException("Invalid username or password!");
     }
 
