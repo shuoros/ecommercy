@@ -1,8 +1,6 @@
 package io.github.shuoros.ecommercy.dao;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import io.github.shuoros.ecommercy.dao.util.StringListConverter;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
@@ -10,12 +8,10 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.Date;
-import java.util.List;
 
 @Entity
-@Table(name = "ADMINS", schema = "ecommercy")
+@Table(name = "COMMENTS", schema = "ecommercy")
 @EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties(value = {"createdAt", "updatedAt"}, allowGetters = true)
 @Builder
@@ -23,7 +19,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-public class Admin {
+public class Comment {
 
     @Id
     @GeneratedValue(generator = "uuid2")
@@ -31,19 +27,18 @@ public class Admin {
     @Column(updatable = false, nullable = false, columnDefinition = "VARCHAR(255)")
     private String id;
 
-    @NotNull
-    private String name;
+    @Column(nullable = false)
+    private Integer star;
 
-    @NotNull
-    private String email;
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
+    private User user;
 
-    @NotNull
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private String password;
+    @ManyToOne
+    @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false)
+    private Product product;
 
-    @Builder.Default
-    @Convert(converter = StringListConverter.class)
-    private List<String> roles = List.of("ADMIN");
+    private String comment;
 
     @Builder.Default
     @Column(nullable = false, updatable = false)

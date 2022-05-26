@@ -1,8 +1,6 @@
 package io.github.shuoros.ecommercy.dao;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import io.github.shuoros.ecommercy.dao.util.StringListConverter;
 import lombok.*;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.GenericGenerator;
@@ -15,7 +13,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "USERS", schema = "ecommercy")
+@Table(name = "PRODUCTS", schema = "ecommercy")
 @EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties(value = {"createdAt", "updatedAt"}, allowGetters = true)
 @Builder
@@ -23,7 +21,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-public class User {
+public class Product {
 
     @Id
     @GeneratedValue(generator = "uuid2")
@@ -31,41 +29,40 @@ public class User {
     @Column(updatable = false, nullable = false, columnDefinition = "VARCHAR(255)")
     private String id;
 
-    @Column(unique = true, nullable = false)
-    private String email;
+    @ManyToOne
+    @JoinColumn(name = "group_id", referencedColumnName = "id", nullable = false)
+    private Group group;
 
-    @Column(unique = true)
-    private String phoneNumber;
-
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @Column(nullable = false)
-    private String password;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "category_id", referencedColumnName = "id", nullable = false)
+    private List<Category> categories;
 
     @Column(nullable = false)
     private String name;
 
-    private String lastName;
+    private String description;
 
-    @OneToMany(mappedBy = "user")
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
-    private List<Address> addresses;
-
-    @OneToOne(mappedBy = "user")
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
-    private Basket basket;
+    @Column(nullable = false)
+    private Float price;
 
     @Builder.Default
     @Column(nullable = false)
-    private int points = 0;
+    private Float discount = 0.0F;
 
-    @OneToMany(mappedBy = "user")
+    @Builder.Default
+    @Column(nullable = false)
+    private int point = 0;
+
+    @Column(nullable = false)
+    private Integer inventory;
+
+    @OneToMany(mappedBy = "product")
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private List<Comment> comments;
 
     @Builder.Default
-    @Convert(converter = StringListConverter.class)
-    @Column(updatable = false)
-    private List<String> roles = List.of("USER");
+    @Column(nullable = false)
+    private float stars = -1;
 
     @Builder.Default
     @Temporal(TemporalType.TIMESTAMP)
