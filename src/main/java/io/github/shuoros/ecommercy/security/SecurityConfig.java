@@ -2,9 +2,11 @@ package io.github.shuoros.ecommercy.security;
 
 import io.github.shuoros.ecommercy.security.filter.ExceptionHandlerFilter;
 import io.github.shuoros.ecommercy.security.filter.JwtAuthenticationFilter;
+import io.github.shuoros.ecommercy.security.filter.RequestsLoggerFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -29,13 +31,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final UnauthorizedEntryPoint unauthorizedEntryPoint;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final ExceptionHandlerFilter exceptionHandlerFilter;
+    private final RequestsLoggerFilter requestsLoggerFilter;
 
     @Autowired
     public SecurityConfig(UnauthorizedEntryPoint unauthorizedEntryPoint, JwtAuthenticationFilter jwtAuthenticationFilter,//
-                          ExceptionHandlerFilter exceptionHandlerFilter) {
+                          ExceptionHandlerFilter exceptionHandlerFilter, RequestsLoggerFilter requestsLoggerFilter
+    ) {
         this.unauthorizedEntryPoint = unauthorizedEntryPoint;
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
         this.exceptionHandlerFilter = exceptionHandlerFilter;
+        this.requestsLoggerFilter = requestsLoggerFilter;
     }
 
     @Override
@@ -51,9 +56,42 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()//
                 .authorizeRequests()//
                 .antMatchers("/graphiql").hasAnyAuthority("ROOT")//
-                .antMatchers("/root/**").hasAnyAuthority("ROOT")//
+                .antMatchers(HttpMethod.POST, "/admin").hasAnyAuthority("ROOT")//
                 .antMatchers("/admin/**").hasAnyAuthority("ADMIN")//
-                .antMatchers("/user/**").hasAnyAuthority("USER")//
+                .antMatchers(HttpMethod.POST, "/user").permitAll()//
+                .antMatchers(HttpMethod.GET, "/user").hasAnyAuthority("ADMIN")//
+                .antMatchers(HttpMethod.DELETE, "/user/**").hasAnyAuthority("ADMIN")//
+                .antMatchers("/user/**").hasAnyAuthority("USER", "ADMIN")//
+                .antMatchers(HttpMethod.GET, "/address").hasAnyAuthority("ADMIN")//
+                .antMatchers("/address/**").hasAnyAuthority("USER", "ADMIN")//
+                .antMatchers(HttpMethod.POST, "/group").hasAnyAuthority("ADMIN")//
+                .antMatchers(HttpMethod.PATCH, "/group/**").hasAnyAuthority("ADMIN")//
+                .antMatchers(HttpMethod.PUT, "/group/**").hasAnyAuthority("ADMIN")//
+                .antMatchers(HttpMethod.DELETE, "/group/**").hasAnyAuthority("ADMIN")//
+                .antMatchers(HttpMethod.GET, "/group/**").permitAll()//
+                .antMatchers(HttpMethod.POST, "/category").hasAnyAuthority("ADMIN")//
+                .antMatchers(HttpMethod.PATCH, "/category/**").hasAnyAuthority("ADMIN")//
+                .antMatchers(HttpMethod.PUT, "/category/**").hasAnyAuthority("ADMIN")//
+                .antMatchers(HttpMethod.DELETE, "/category/**").hasAnyAuthority("ADMIN")//
+                .antMatchers(HttpMethod.GET, "/category/**").permitAll()//
+                .antMatchers(HttpMethod.POST, "/product").hasAnyAuthority("ADMIN")//
+                .antMatchers(HttpMethod.PATCH, "/product/**").hasAnyAuthority("ADMIN")//
+                .antMatchers(HttpMethod.PUT, "/product/**").hasAnyAuthority("ADMIN")//
+                .antMatchers(HttpMethod.DELETE, "/product/**").hasAnyAuthority("ADMIN")//
+                .antMatchers(HttpMethod.GET, "/product/**").permitAll()//
+                .antMatchers(HttpMethod.POST, "/basket").denyAll()//
+                .antMatchers(HttpMethod.GET, "/basket").hasAnyAuthority("ADMIN")//
+                .antMatchers(HttpMethod.PATCH, "/basket/**").denyAll()//
+                .antMatchers(HttpMethod.PUT, "/basket/**").denyAll()//
+                .antMatchers(HttpMethod.DELETE, "/basket/**").denyAll()//
+                .antMatchers(HttpMethod.GET, "/basket/**").hasAnyAuthority("USER", "ADMIN")//
+                .antMatchers(HttpMethod.POST, "/basketItem").hasAnyAuthority("USER", "ADMIN")//
+                .antMatchers("/basketItem/**").hasAnyAuthority("USER", "ADMIN")//
+                .antMatchers(HttpMethod.POST, "/comment").hasAnyAuthority("USER", "ADMIN")//
+                .antMatchers(HttpMethod.PATCH, "/comment/**").hasAnyAuthority("USER", "ADMIN")//
+                .antMatchers(HttpMethod.PUT, "/comment/**").hasAnyAuthority("USER", "ADMIN")//
+                .antMatchers(HttpMethod.DELETE, "/comment/**").hasAnyAuthority("USER", "ADMIN")//
+                .antMatchers(HttpMethod.GET, "/comment/**").permitAll()//
                 .antMatchers("/**").permitAll()//
                 .anyRequest().authenticated()//
                 .and()//
@@ -62,6 +100,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         http.addFilterBefore(exceptionHandlerFilter, JwtAuthenticationFilter.class);
+        http.addFilterBefore(requestsLoggerFilter, ExceptionHandlerFilter.class);
     }
 
     @Bean
