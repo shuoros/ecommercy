@@ -48,7 +48,6 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
-    @ToString.Exclude
     private List<Address> addresses;
 
     @OneToOne(mappedBy = "user")
@@ -61,7 +60,6 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
-    @ToString.Exclude
     private List<Comment> comments;
 
     @Builder.Default
