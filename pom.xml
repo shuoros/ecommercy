@@ -18,9 +18,15 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>17</java.version>
+        <java.version>18</java.version>
         <json.version>20220320</json.version>
         <jjwt.version>0.9.1</jjwt.version>
+        <springdoc-openapi-ui.version>1.6.8</springdoc-openapi-ui.version>
+        <lombok.version>1.18.24</lombok.version>
+        <springdoc-openapi-data-rest.version>1.6.8</springdoc-openapi-data-rest.version>
+        <graphql-spring-boot-starter.version>5.0.2</graphql-spring-boot-starter.version>
+        <graphiql-spring-boot-starter.version>5.0.2</graphiql-spring-boot-starter.version>
+        <graphql-java-tools.version>5.2.4</graphql-java-tools.version>
     </properties>
 
     <dependencies>
@@ -48,38 +54,36 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-thymeleaf</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-websocket</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.thymeleaf.extras</groupId>
-            <artifactId>thymeleaf-extras-springsecurity5</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
+            <version>${springdoc-openapi-ui.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-data-rest</artifactId>
+            <version>${springdoc-openapi-data-rest.version}</version>
+        </dependency>
+        <dependency>
             <groupId>com.graphql-java</groupId>
             <artifactId>graphql-spring-boot-starter</artifactId>
-            <version>5.0.2</version>
+            <version>${graphql-spring-boot-starter.version}</version>
         </dependency>
         <dependency>
             <groupId>com.graphql-java</groupId>
             <artifactId>graphiql-spring-boot-starter</artifactId>
-            <version>5.0.2</version>
+            <version>${graphiql-spring-boot-starter.version}</version>
         </dependency>
         <dependency>
             <groupId>com.graphql-java</groupId>
             <artifactId>graphql-java-tools</artifactId>
-            <version>5.2.4</version>
+            <version>${graphql-java-tools.version}</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -118,6 +122,7 @@
                         <exclude>
                             <groupId>org.projectlombok</groupId>
                             <artifactId>lombok</artifactId>
+                            <version>${lombok.version}</version>
                         </exclude>
                     </excludes>
                 </configuration>
