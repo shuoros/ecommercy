@@ -24,19 +24,19 @@ public class ExceptionHandlerFilter extends OncePerRequestFilter {
         try {
             chain.doFilter(req, res);
         } catch (IllegalArgumentException e) {
-            log.error("IllegalArgumentException: {}", e.getMessage());
+            log.warn("IllegalArgumentException: {}", e.getMessage());
             setErrorResponse(HttpStatus.UNAUTHORIZED, req, res, "An error occurred while fetching name from Token!");
         } catch (ExpiredJwtException e) {
-            log.error("JwtException: {}", e.getMessage());
+            log.warn("JwtException: {}", e.getMessage());
             setErrorResponse(HttpStatus.UNAUTHORIZED, req, res, "The token has expired!");
         } catch (SignatureException e) {
-            log.error("SignatureException: {}", e.getMessage());
+            log.warn("SignatureException: {}", e.getMessage());
             setErrorResponse(HttpStatus.UNAUTHORIZED, req, res, "Invalid token!");
         } catch (PayloadException e) {
-            log.error("PayloadException: {}", e.getMessage());
+            log.warn("PayloadException: {}", e.getMessage());
             setErrorResponse(e.getStatus(), req, res, e.getMessage());
         } catch (RuntimeException e) {
-            log.error("RuntimeException: {}", e.getMessage());
+            log.warn("RuntimeException: {}", e.getMessage());
             setErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, req, res, "Unexpected error!");
         }
     }
