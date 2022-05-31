@@ -1,6 +1,7 @@
 package io.github.shuoros.ecommercy.security.filter;
 
 import io.github.shuoros.ecommercy.control.util.Response;
+import io.github.shuoros.ecommercy.exception.PayloadException;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.SignatureException;
 import lombok.extern.slf4j.Slf4j;
@@ -19,21 +20,24 @@ import java.io.IOException;
 public class ExceptionHandlerFilter extends OncePerRequestFilter {
 
     @Override
-    public void doFilterInternal(HttpServletRequest request, HttpServletResponse res, FilterChain chain) throws ServletException, IOException {
+    public void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws ServletException, IOException {
         try {
-            chain.doFilter(request, res);
+            chain.doFilter(req, res);
         } catch (IllegalArgumentException e) {
-            log.error("IllegalArgumentException: {}", e.getMessage());
-            setErrorResponse(HttpStatus.UNAUTHORIZED, request, res, "An error occurred while fetching name from Token!");
+            log.warn("IllegalArgumentException: {}", e.getMessage());
+            setErrorResponse(HttpStatus.UNAUTHORIZED, req, res, "An error occurred while fetching name from Token!");
         } catch (ExpiredJwtException e) {
-            log.error("JwtException: {}", e.getMessage());
-            setErrorResponse(HttpStatus.UNAUTHORIZED, request, res, "The token has expired!");
+            log.warn("JwtException: {}", e.getMessage());
+            setErrorResponse(HttpStatus.UNAUTHORIZED, req, res, "The token has expired!");
         } catch (SignatureException e) {
-            log.error("SignatureException: {}", e.getMessage());
-            setErrorResponse(HttpStatus.UNAUTHORIZED, request, res, "Invalid token!");
+            log.warn("SignatureException: {}", e.getMessage());
+            setErrorResponse(HttpStatus.UNAUTHORIZED, req, res, "Invalid token!");
+        } catch (PayloadException e) {
+            log.warn("PayloadException: {}", e.getMessage());
+            setErrorResponse(e.getStatus(), req, res, e.getMessage());
         } catch (RuntimeException e) {
-            log.error("RuntimeException: {}", e.getMessage());
-            setErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, request, res, "Unexpected error!");
+            log.warn("RuntimeException: {}", e.getMessage());
+            setErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, req, res, "Unexpected error!");
         }
     }
 
