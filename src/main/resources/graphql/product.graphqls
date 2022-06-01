@@ -1,5 +1,3 @@
-scalar Long
-
 type Product {
     id: ID!
     name: String!
@@ -12,5 +10,5 @@ type Product {
 
 type Query {
     findAllProducts: [Product]!
-    countProducts: Long!
+    countProducts: Int!
 }
