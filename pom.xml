@@ -27,6 +27,8 @@
         <graphql-spring-boot-starter.version>5.0.2</graphql-spring-boot-starter.version>
         <graphiql-spring-boot-starter.version>5.0.2</graphiql-spring-boot-starter.version>
         <graphql-java-tools.version>5.2.4</graphql-java-tools.version>
+        <sentry-spring-boot-starter.version>5.7.4</sentry-spring-boot-starter.version>
+        <sentry-logback.version>5.7.4</sentry-logback.version>
     </properties>
 
     <dependencies>
@@ -84,6 +86,16 @@
             <groupId>com.graphql-java</groupId>
             <artifactId>graphql-java-tools</artifactId>
             <version>${graphql-java-tools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.sentry</groupId>
+            <artifactId>sentry-spring-boot-starter</artifactId>
+            <version>${sentry-spring-boot-starter.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.sentry</groupId>
+            <artifactId>sentry-logback</artifactId>
+            <version>${sentry-logback.version}</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
