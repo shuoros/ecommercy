@@ -53,15 +53,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    public void configure(WebSecurity web) throws Exception {
-        web//
-                .ignoring()//
-                .antMatchers("/graphql")//
-                .antMatchers("/graphiql")//
-                .antMatchers("/swagger-ui");
-    }
-
-    @Override
     protected void configure(HttpSecurity http) throws Exception {
         http//
                 // TODO: Remember to re enable csrf
@@ -116,6 +107,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.DELETE, "/category/**").hasAnyAuthority("ADMIN")//
                 .antMatchers(HttpMethod.GET, "/category").permitAll()//
                 .antMatchers(HttpMethod.GET, "/category/**").permitAll()//
+                // Other Endpoints
+                .antMatchers("/graphql").permitAll()//
+                .antMatchers("/graphiql").permitAll()//
+                .antMatchers("/swagger-ui").permitAll()//
                 .anyRequest().authenticated()//
                 .and()//
                 .exceptionHandling().authenticationEntryPoint(unauthorizedEntryPoint)//
