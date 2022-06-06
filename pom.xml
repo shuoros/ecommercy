@@ -13,20 +13,25 @@
     <version>0.0.1</version>
     <packaging>jar</packaging>
     <name>ecommercy</name>
-    <description>A customizable ecommerce core REST-API application with Spring Boot.</description>
+    <description>A customizable ecommerce core REST-API application.</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>18</java.version>
+        <maven.compiler.source>18</maven.compiler.source>
+        <maven.compiler.target>18</maven.compiler.target>
         <json.version>20220320</json.version>
         <jjwt.version>0.9.1</jjwt.version>
         <springdoc-openapi-ui.version>1.6.8</springdoc-openapi-ui.version>
-        <lombok.version>1.18.24</lombok.version>
         <springdoc-openapi-data-rest.version>1.6.8</springdoc-openapi-data-rest.version>
         <graphql-spring-boot-starter.version>5.0.2</graphql-spring-boot-starter.version>
         <graphiql-spring-boot-starter.version>5.0.2</graphiql-spring-boot-starter.version>
         <graphql-java-tools.version>5.2.4</graphql-java-tools.version>
+        <sentry-spring-boot-starter.version>5.7.4</sentry-spring-boot-starter.version>
+        <sentry-logback.version>5.7.4</sentry-logback.version>
+        <jib-maven-plugin.version>3.2.1</jib-maven-plugin.version>
+        <lombok.version>1.18.24</lombok.version>
     </properties>
 
     <dependencies>
@@ -86,19 +91,14 @@
             <version>${graphql-java-tools.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <optional>true</optional>
+            <groupId>io.sentry</groupId>
+            <artifactId>sentry-spring-boot-starter</artifactId>
+            <version>${sentry-spring-boot-starter.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-test</artifactId>
-            <scope>test</scope>
+            <groupId>io.sentry</groupId>
+            <artifactId>sentry-logback</artifactId>
+            <version>${sentry-logback.version}</version>
         </dependency>
         <dependency>
             <groupId>org.json</groupId>
@@ -110,23 +110,54 @@
             <artifactId>jjwt</artifactId>
             <version>${jjwt.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
+        <finalName>${project.artifactId}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <excludes>
-                        <exclude>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok</artifactId>
-                            <version>${lombok.version}</version>
-                        </exclude>
-                    </excludes>
+                    <layers>
+                        <enabled>true</enabled>
+                    </layers>
                 </configuration>
             </plugin>
+            <!--<plugin>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>jib-maven-plugin</artifactId>
+                <version>${jib-maven-plugin.version}</version>
+                <configuration>
+                    <from>
+                        <image>openjdk:18-oracle</image>
+                        <auth>
+                            <username>{DOCKER-HUB-USERNAME}</username>
+                            <password>{DOCKER-HUB-PASSWORD}</password>
+                        </auth>
+                    </from>
+                    <to>
+                        <image>ecommercy</image>
+                    </to>
+                    <allowInsecureRegistries>true</allowInsecureRegistries>
+                </configuration>
+            </plugin>-->
         </plugins>
     </build>
 
