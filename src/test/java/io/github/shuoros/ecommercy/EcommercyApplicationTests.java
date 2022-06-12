@@ -5,6 +5,8 @@ import io.github.shuoros.ecommercy.config.AspectJConfig;
 import io.github.shuoros.ecommercy.config.OpenApiConfig;
 import io.github.shuoros.ecommercy.control.AuthController;
 import io.github.shuoros.ecommercy.control.ExceptionController;
+import io.github.shuoros.ecommercy.dao.graphql.query.ProductQuery;
+import io.github.shuoros.ecommercy.dao.repository.*;
 import io.github.shuoros.ecommercy.security.SecurityConfig;
 import io.github.shuoros.ecommercy.security.UnauthorizedEntryPoint;
 import io.github.shuoros.ecommercy.security.filter.ExceptionHandlerFilter;
@@ -12,7 +14,6 @@ import io.github.shuoros.ecommercy.security.filter.JwtAuthenticationFilter;
 import io.github.shuoros.ecommercy.security.filter.RequestsLoggerFilter;
 import io.github.shuoros.ecommercy.security.filter.RestDataSecurityFilter;
 import io.github.shuoros.ecommercy.security.jwt.Jwt;
-import org.checkerframework.checker.units.qual.A;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -66,6 +67,51 @@ class EcommercyApplicationTests {
 
     @Autowired
     private RestDataSecurityFilter restDataSecurityFilter;
+
+    @Autowired
+    private ProductQuery productQuery;
+
+    @Autowired
+    private AddressRepository addressRepository;
+
+    @Autowired
+    private AdminRepository adminRepository;
+
+    @Autowired
+    private BasketItemRepository basketItemRepository;
+
+    @Autowired
+    private BasketRepository basketRepository;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
+
+    @Autowired
+    private CityRepository cityRepository;
+
+    @Autowired
+    private CountryRepository countryRepository;
+
+    @Autowired
+    private CommentRepository commentRepository;
+
+    @Autowired
+    private GroupRepository groupRepository;
+
+    @Autowired
+    private OrderRepository orderRepository;
+
+    @Autowired
+    private OrderItemRepository orderItemRepository;
+
+    @Autowired
+    private ProductRepository productRepository;
+
+    @Autowired
+    private StateRepository stateRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Test
     void contextLoads() {
@@ -135,6 +181,81 @@ class EcommercyApplicationTests {
     @Test
     void restDataSecurityFilterLoads() {
         assertNotNull(restDataSecurityFilter);
+    }
+
+    @Test
+    void productQueryLoads() {
+        assertNotNull(productQuery);
+    }
+
+    @Test
+    void addressRepositoryLoads() {
+        assertNotNull(addressRepository);
+    }
+
+    @Test
+    void adminRepositoryLoads() {
+        assertNotNull(adminRepository);
+    }
+
+    @Test
+    void basketItemRepositoryLoads() {
+        assertNotNull(basketItemRepository);
+    }
+
+    @Test
+    void basketRepositoryLoads() {
+        assertNotNull(basketRepository);
+    }
+
+    @Test
+    void categoryRepositoryLoads() {
+        assertNotNull(categoryRepository);
+    }
+
+    @Test
+    void cityRepositoryLoads() {
+        assertNotNull(cityRepository);
+    }
+
+    @Test
+    void countryRepositoryLoads() {
+        assertNotNull(countryRepository);
+    }
+
+    @Test
+    void commentRepositoryLoads() {
+        assertNotNull(commentRepository);
+    }
+
+    @Test
+    void groupRepositoryLoads() {
+        assertNotNull(groupRepository);
+    }
+
+    @Test
+    void orderRepositoryLoads() {
+        assertNotNull(orderRepository);
+    }
+
+    @Test
+    void orderItemRepositoryLoads() {
+        assertNotNull(orderItemRepository);
+    }
+
+    @Test
+    void productRepositoryLoads() {
+        assertNotNull(productRepository);
+    }
+
+    @Test
+    void stateRepositoryLoads() {
+        assertNotNull(stateRepository);
+    }
+
+    @Test
+    void userRepositoryLoads() {
+        assertNotNull(userRepository);
     }
 
 }
