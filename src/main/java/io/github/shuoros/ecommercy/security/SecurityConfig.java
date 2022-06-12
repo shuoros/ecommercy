@@ -110,7 +110,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // Other Endpoints
                 .antMatchers("/graphql").permitAll()//
                 .antMatchers("/graphiql").permitAll()//
+                .antMatchers("/vendor/graphiql/**").permitAll()//
+                .antMatchers("/subscriptions").permitAll()//
                 .antMatchers("/swagger-ui").permitAll()//
+                .antMatchers("/favicon.ico").permitAll()//
                 .anyRequest().authenticated()//
                 .and()//
                 .exceptionHandling().authenticationEntryPoint(unauthorizedEntryPoint)//
