@@ -8,7 +8,10 @@ import org.springframework.context.annotation.PropertySources;
 @SpringBootApplication
 @PropertySources({
         @PropertySource("classpath:application.properties"),
-        @PropertySource("classpath:application-mysql.properties")
+        @PropertySource("classpath:application-graphql.properties"),
+        @PropertySource("classpath:application-jwt.properties"),
+        @PropertySource("classpath:application-mysql.properties"),
+        @PropertySource("classpath:application-openapi.properties")
 })
 public class EcommercyApplication {
 
