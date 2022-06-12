@@ -23,11 +23,10 @@
         <maven.compiler.target>18</maven.compiler.target>
         <json.version>20220320</json.version>
         <jjwt.version>0.9.1</jjwt.version>
+        <graphql-spring-boot-starter.version>12.0.0</graphql-spring-boot-starter.version>
+        <graphql-spring-boot-starter-test.version>12.0.0</graphql-spring-boot-starter-test.version>
         <springdoc-openapi-ui.version>1.6.8</springdoc-openapi-ui.version>
         <springdoc-openapi-data-rest.version>1.6.8</springdoc-openapi-data-rest.version>
-        <graphql-spring-boot-starter.version>5.0.2</graphql-spring-boot-starter.version>
-        <graphiql-spring-boot-starter.version>5.0.2</graphiql-spring-boot-starter.version>
-        <graphql-java-tools.version>5.2.4</graphql-java-tools.version>
         <sentry-spring-boot-starter.version>5.7.4</sentry-spring-boot-starter.version>
         <sentry-logback.version>5.7.4</sentry-logback.version>
         <jib-maven-plugin.version>3.2.1</jib-maven-plugin.version>
@@ -76,19 +75,15 @@
             <version>${springdoc-openapi-data-rest.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.graphql-java</groupId>
+            <groupId>com.graphql-java-kickstart</groupId>
             <artifactId>graphql-spring-boot-starter</artifactId>
             <version>${graphql-spring-boot-starter.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.graphql-java</groupId>
-            <artifactId>graphiql-spring-boot-starter</artifactId>
-            <version>${graphiql-spring-boot-starter.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.graphql-java</groupId>
-            <artifactId>graphql-java-tools</artifactId>
-            <version>${graphql-java-tools.version}</version>
+            <groupId>com.graphql-java-kickstart</groupId>
+            <artifactId>graphql-spring-boot-starter-test</artifactId>
+            <version>${graphql-spring-boot-starter-test.version}</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>io.sentry</groupId>
