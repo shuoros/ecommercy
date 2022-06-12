@@ -150,3 +150,28 @@ CREATE TABLE IF NOT EXISTS `comments` (
                             FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
                             FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB;
+
+CREATE TABLE `orders` (
+                          `id` varchar(255) NOT NULL,
+                          `discount` double NOT NULL,
+                          `total_price` double NOT NULL,
+                          `address_id` varchar(255) DEFAULT NULL,
+                          `user_id` varchar(255) NOT NULL,
+                          PRIMARY KEY (`id`),
+                          KEY (`address_id`),
+                          KEY (`user_id`),
+                          FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+                          FOREIGN KEY (`address_id`) REFERENCES `addresses` (`id`)
+) ENGINE=InnoDB;
+
+CREATE TABLE `orderitems` (
+                              `id` varchar(255) NOT NULL,
+                              `quantity` int(11) NOT NULL,
+                              `order_id` varchar(255) NOT NULL,
+                              `product_id` varchar(255) NOT NULL,
+                              PRIMARY KEY (`id`),
+                              KEY (`order_id`),
+                              KEY (`product_id`),
+                              FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`),
+                              FOREIGN KEY (`product_id`) REFERENCES `products` (`id`)
+) ENGINE=InnoDB;
