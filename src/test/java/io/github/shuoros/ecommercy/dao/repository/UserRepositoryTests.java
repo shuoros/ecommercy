@@ -1,5 +1,6 @@
 package io.github.shuoros.ecommercy.dao.repository;
 
+import io.github.shuoros.ecommercy.AbstractContainerBaseTest;
 import io.github.shuoros.ecommercy.dao.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class UserRepositoryTests {
+public class UserRepositoryTests extends AbstractContainerBaseTest {
 
     @Autowired
     private UserRepository userRepository;
@@ -20,7 +21,7 @@ public class UserRepositoryTests {
     @Test
     void createUserMustCreateANewUserInDB() {
         // Arrange
-        User user = User.builder()//
+        final User user = User.builder()//
                 .name("John")//
                 .lastName("Doe")//
                 .email("johndoe@email.com")//
@@ -29,7 +30,7 @@ public class UserRepositoryTests {
                 .build();
 
         // Act
-        User savedUser = userRepository.saveAndFlush(user);
+        final User savedUser = userRepository.saveAndFlush(user);
 
         // Assert
         assertNotNull(savedUser);
@@ -39,7 +40,7 @@ public class UserRepositoryTests {
     @Test
     void ifEmailIsNullMustThrowException() {
         // Arrange
-        User user = User.builder()//
+        final User user = User.builder()//
                 .name("John")//
                 .lastName("Doe")//
                 .password("password")//
@@ -54,7 +55,7 @@ public class UserRepositoryTests {
     @Test
     void ifPasswordIsNullMustThrowException() {
         // Arrange
-        User user = User.builder()//
+        final User user = User.builder()//
                 .name("John")//
                 .lastName("Doe")//
                 .email("johndoe@email.com")//
@@ -69,7 +70,7 @@ public class UserRepositoryTests {
     @Test
     void ifNameIsNullMustThrowException() {
         // Arrange
-        User user = User.builder()//
+        final User user = User.builder()//
                 .lastName("Doe")//
                 .email("johndoe@email.com")//
                 .password("password")//
@@ -84,14 +85,14 @@ public class UserRepositoryTests {
     @Test
     void ifAUserExistWithGivenEmailMustThrowException() {
         // Arrange
-        User user1 = User.builder()//
+        final User user1 = User.builder()//
                 .name("John")//
                 .lastName("Doe")//
                 .email("johndoe@email.com")//
                 .password("password")//
                 .phoneNumber("123456789")//
                 .build();
-        User user2 = User.builder()//
+        final User user2 = User.builder()//
                 .name("John")//
                 .lastName("Doe")//
                 .email("johndoe@email.com")//
@@ -108,14 +109,14 @@ public class UserRepositoryTests {
     @Test
     void ifAUserExistWithGivenPhoneNumberMustThrowException() {
         // Arrange
-        User user1 = User.builder()//
+        final User user1 = User.builder()//
                 .name("John")//
                 .lastName("Doe")//
                 .email("johndoe@email.com")//
                 .password("password")//
                 .phoneNumber("123456789")//
                 .build();
-        User user2 = User.builder()//
+        final User user2 = User.builder()//
                 .name("John")//
                 .lastName("Doe")//
                 .email("doejoun@email.com")//
@@ -132,17 +133,17 @@ public class UserRepositoryTests {
     @Test
     void findByIdMustReturnUserWithSameId() {
         // Arrange
-        User user = User.builder()//
+        final User user = User.builder()//
                 .name("John")//
                 .lastName("Doe")//
                 .email("johndoe@email.com")//
                 .password("password")//
                 .phoneNumber("123456789")//
                 .build();
-        User savedUser = userRepository.saveAndFlush(user);
+        final User savedUser = userRepository.saveAndFlush(user);
 
         // Act
-        Optional<User> foundUser = userRepository.findById(savedUser.getId());
+        final Optional<User> foundUser = userRepository.findById(savedUser.getId());
 
         // Assert
         assertTrue(foundUser.isPresent());
@@ -152,17 +153,17 @@ public class UserRepositoryTests {
     @Test
     void findByEmailMustReturnUserWithSameEmail() {
         // Arrange
-        User user = User.builder()//
+        final User user = User.builder()//
                 .name("John")//
                 .lastName("Doe")//
                 .email("johndoe@email.com")//
                 .password("password")//
                 .phoneNumber("123456789")//
                 .build();
-        User savedUser = userRepository.saveAndFlush(user);
+        final User savedUser = userRepository.saveAndFlush(user);
 
         // Act
-        Optional<User> foundUser = userRepository.findByEmail(savedUser.getEmail());
+        final Optional<User> foundUser = userRepository.findByEmail(savedUser.getEmail());
 
         // Assert
         assertTrue(foundUser.isPresent());
@@ -172,14 +173,14 @@ public class UserRepositoryTests {
     @Test
     void findAllMustReturnAllUsers() {
         // Arrange
-        User user1 = User.builder()//
+        final User user1 = User.builder()//
                 .name("John")//
                 .lastName("Doe")//
                 .email("johndoe@email.com")//
                 .password("password")//
                 .phoneNumber("123456789")//
                 .build();
-        User user2 = User.builder()//
+        final User user2 = User.builder()//
                 .name("John")//
                 .lastName("Doe")//
                 .email("doejoun@email.com")//
@@ -196,18 +197,18 @@ public class UserRepositoryTests {
     @Test
     void updateAUserMustUpdateTheUserNotSaveAnotherUser() {
         // Arrange
-        User user = User.builder()//
+        final User user = User.builder()//
                 .name("John")//
                 .lastName("Doe")//
                 .email("johndoe@email.com")//
                 .password("password")//
                 .phoneNumber("123456789")//
                 .build();
-        User savedUser = userRepository.saveAndFlush(user);
+        final User savedUser = userRepository.saveAndFlush(user);
 
         // Act
         savedUser.setName("Jane");
-        User updatedUser = userRepository.saveAndFlush(savedUser);
+        final User updatedUser = userRepository.saveAndFlush(savedUser);
 
         // Assert
         assertEquals(updatedUser.getName(), "Jane");
@@ -218,14 +219,14 @@ public class UserRepositoryTests {
     @Test
     void deleteAUserMustDeleteTheUser() {
         // Arrange
-        User user = User.builder()//
+        final User user = User.builder()//
                 .name("John")//
                 .lastName("Doe")//
                 .email("johndoe@email.com")//
                 .password("password")//
                 .phoneNumber("123456789")//
                 .build();
-        User savedUser = userRepository.saveAndFlush(user);
+        final User savedUser = userRepository.saveAndFlush(user);
 
         // Act
         userRepository.delete(savedUser);

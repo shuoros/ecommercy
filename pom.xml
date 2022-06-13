@@ -31,6 +31,9 @@
         <sentry-logback.version>5.7.4</sentry-logback.version>
         <jib-maven-plugin.version>3.2.1</jib-maven-plugin.version>
         <lombok.version>1.18.24</lombok.version>
+        <testcontainers.version>1.17.2</testcontainers.version>
+        <org.testcontainers.junit-jupiter.version>1.17.2</org.testcontainers.junit-jupiter.version>
+        <org.testcontainers.mysql.version>1.17.2</org.testcontainers.mysql.version>
     </properties>
 
     <dependencies>
@@ -119,6 +122,24 @@
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>testcontainers</artifactId>
+            <version>${testcontainers.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>${org.testcontainers.junit-jupiter.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>mysql</artifactId>
+            <version>${org.testcontainers.mysql.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
