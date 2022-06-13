@@ -151,7 +151,7 @@ CREATE TABLE IF NOT EXISTS `comments` (
                             FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB;
 
-CREATE TABLE `orders` (
+CREATE TABLE IF NOT EXISTS `orders` (
                           `id` varchar(255) NOT NULL,
                           `discount` double NOT NULL,
                           `total_price` double NOT NULL,
@@ -164,7 +164,7 @@ CREATE TABLE `orders` (
                           FOREIGN KEY (`address_id`) REFERENCES `addresses` (`id`)
 ) ENGINE=InnoDB;
 
-CREATE TABLE `orderitems` (
+CREATE TABLE IF NOT EXISTS `orderitems` (
                               `id` varchar(255) NOT NULL,
                               `quantity` int(11) NOT NULL,
                               `order_id` varchar(255) NOT NULL,
