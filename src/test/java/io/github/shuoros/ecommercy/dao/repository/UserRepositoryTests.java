@@ -2,21 +2,26 @@ package io.github.shuoros.ecommercy.dao.repository;
 
 import io.github.shuoros.ecommercy.AbstractContainerBaseTest;
 import io.github.shuoros.ecommercy.dao.User;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-@DataJpaTest
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class UserRepositoryTests extends AbstractContainerBaseTest {
 
     @Autowired
     private UserRepository userRepository;
+
+    @BeforeEach
+    public void setUp() {
+        userRepository.deleteAll();
+    }
 
     @Test
     void createUserMustCreateANewUserInDB() {
@@ -35,6 +40,8 @@ public class UserRepositoryTests extends AbstractContainerBaseTest {
         // Assert
         assertNotNull(savedUser);
         assertNotNull(savedUser.getId());
+        assertNotNull(savedUser.getCreatedAt());
+        assertNotNull(savedUser.getUpdatedAt());
     }
 
     @Test
