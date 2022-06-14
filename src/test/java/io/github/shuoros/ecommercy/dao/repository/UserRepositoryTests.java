@@ -224,6 +224,58 @@ public class UserRepositoryTests extends AbstractContainerBaseTest {
     }
 
     @Test
+    void updateEmailOfAUserToEmailOfAExistingUserMustThrowException() {
+        // Arrange
+        final User user1 = User.builder()//
+                .name("John")//
+                .lastName("Doe")//
+                .email("johndoe@email.com")//
+                .password("password")//
+                .phoneNumber("123456789")//
+                .build();
+        final User user2 = User.builder()//
+                .name("John")//
+                .lastName("Doe")//
+                .email("doejoun@email.com")//
+                .password("password")//
+                .phoneNumber("987654321")//
+                .build();
+        userRepository.saveAndFlush(user1);
+        final User savedUser = userRepository.saveAndFlush(user2);
+
+        // Act & Assert
+        savedUser.setEmail("johndoe@email.com");
+        assertThrows(org.springframework.dao.DataIntegrityViolationException.class,//
+                () -> userRepository.saveAndFlush(savedUser));
+    }
+
+    @Test
+    void updatePhoneNumberOfAUserToPhoneNumberOfAExistingUserMustThrowException() {
+        // Arrange
+        final User user1 = User.builder()//
+                .name("John")//
+                .lastName("Doe")//
+                .email("johndoe@email.com")//
+                .password("password")//
+                .phoneNumber("123456789")//
+                .build();
+        final User user2 = User.builder()//
+                .name("John")//
+                .lastName("Doe")//
+                .email("doejoun@email.com")//
+                .password("password")//
+                .phoneNumber("987654321")//
+                .build();
+        userRepository.saveAndFlush(user1);
+        final User savedUser = userRepository.saveAndFlush(user2);
+
+        // Act & Assert
+        savedUser.setPhoneNumber("123456789");
+        assertThrows(org.springframework.dao.DataIntegrityViolationException.class,//
+                () -> userRepository.saveAndFlush(savedUser));
+    }
+
+    @Test
     void deleteAUserMustDeleteTheUser() {
         // Arrange
         final User user = User.builder()//
