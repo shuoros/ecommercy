@@ -8,6 +8,7 @@ import io.github.shuoros.ecommercy.exception.PayloadException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.core.annotation.HandleAfterCreate;
 import org.springframework.data.rest.core.annotation.HandleBeforeCreate;
+import org.springframework.data.rest.core.annotation.HandleBeforeSave;
 import org.springframework.data.rest.core.annotation.RepositoryEventHandler;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -38,6 +39,8 @@ public class UserEventHandler {
             throw new PayloadException("Missing name, email or password!", HttpStatus.UNPROCESSABLE_ENTITY);
         if (userRepository.findByEmail(user.getEmail()).isPresent())
             throw new PayloadException("User with such email already exists!", HttpStatus.CONFLICT);
+        if (user.getPhoneNumber() != null && userRepository.findByPhoneNumber(user.getPhoneNumber()).isPresent())
+            throw new PayloadException("User with such phone number already exists!", HttpStatus.CONFLICT);
         if (!isValidPassword(user.getPassword()))
             throw new PayloadException("Your password is not compatible! Consider choosing password with " +
                     "1-at least 8 characters and at most 20 characters. " +
@@ -54,6 +57,17 @@ public class UserEventHandler {
         basketRepository.save(Basket.builder()//
                 .user(user)//
                 .build());
+    }
+
+    @HandleBeforeSave
+    public void handleBeforeSave(final User user) {
+        if (userRepository.findByEmail(user.getEmail()).isPresent()//
+                && !userRepository.findByEmail(user.getEmail()).get().getId().equals(user.getId()))
+            throw new PayloadException("User with such email already exists!", HttpStatus.CONFLICT);
+        if (user.getPhoneNumber() != null//
+                && userRepository.findByPhoneNumber(user.getPhoneNumber()).isPresent()//
+                && !userRepository.findByPhoneNumber(user.getPhoneNumber()).get().getId().equals(user.getId()))
+            throw new PayloadException("User with such phone number already exists!", HttpStatus.CONFLICT);
     }
 
     private boolean isValidPassword(final String password) {
