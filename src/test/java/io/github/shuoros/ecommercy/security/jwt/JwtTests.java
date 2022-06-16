@@ -1,5 +1,6 @@
 package io.github.shuoros.ecommercy.security.jwt;
 
+import io.github.shuoros.ecommercy.AbstractContainerBaseTest;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +17,8 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
-public class JwtTests {
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+public class JwtTests extends AbstractContainerBaseTest {
 
     @Autowired
     private Jwt jwt;

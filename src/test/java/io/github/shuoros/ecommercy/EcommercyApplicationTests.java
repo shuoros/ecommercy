@@ -23,8 +23,8 @@ import javax.annotation.Resource;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-@SpringBootTest
-class EcommercyApplicationTests {
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+class EcommercyApplicationTests extends AbstractContainerBaseTest {
 
     @Autowired
     private EcommercyApplication application;
