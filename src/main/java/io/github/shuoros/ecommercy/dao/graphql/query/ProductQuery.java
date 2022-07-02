@@ -1,6 +1,6 @@
 package io.github.shuoros.ecommercy.dao.graphql.query;
 
-import com.coxautodev.graphql.tools.GraphQLQueryResolver;
+import graphql.kickstart.tools.GraphQLQueryResolver;
 import io.github.shuoros.ecommercy.dao.Product;
 import io.github.shuoros.ecommercy.dao.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;

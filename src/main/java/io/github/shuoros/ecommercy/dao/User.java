@@ -54,6 +54,10 @@ public class User {
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Basket basket;
 
+    @OneToMany(mappedBy = "user")
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    private List<Order> orders;
+
     @Builder.Default
     @Column(nullable = false)
     private int points = 0;

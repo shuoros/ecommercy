@@ -65,7 +65,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // User API
                 .antMatchers(HttpMethod.POST, "/user").permitAll()//
                 .antMatchers(HttpMethod.GET, "/user").hasAnyAuthority("ADMIN")//
-                .antMatchers(HttpMethod.DELETE, "/user/**").hasAnyAuthority("ADMIN")//
                 .antMatchers("/user/**").hasAnyAuthority("USER", "ADMIN")//
                 // Address API
                 .antMatchers(HttpMethod.GET, "/address").hasAnyAuthority("ADMIN")//
@@ -110,7 +109,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // Other Endpoints
                 .antMatchers("/graphql").permitAll()//
                 .antMatchers("/graphiql").permitAll()//
+                .antMatchers("/vendor/graphiql/**").permitAll()//
+                .antMatchers("/subscriptions").permitAll()//
                 .antMatchers("/swagger-ui").permitAll()//
+                .antMatchers("/favicon.ico").permitAll()//
                 .anyRequest().authenticated()//
                 .and()//
                 .exceptionHandling().authenticationEntryPoint(unauthorizedEntryPoint)//
