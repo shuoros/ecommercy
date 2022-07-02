@@ -1,2 +1,2 @@
-# all-about-spring
-All I know about Spring as a Spring Boot app
+# Ecommercy
+An ecommerce Spring Boot Project!

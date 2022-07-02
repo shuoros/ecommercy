@@ -1,0 +1,32 @@
+version: '3.7'
+
+networks:
+  ecommercy-net:
+    driver: bridge
+
+services:
+  ecommercy-app:
+    build:
+      context: .
+      args:
+        JAR_FILE: "./target/ecommercy.jar"
+    image: ecommercy-app
+    ports:
+      - "8080:8080"
+    networks:
+      - ecommercy-net
+    depends_on:
+      - ecommercy-db
+  ecommercy-db:
+    image: mysql:8.0
+    expose:
+      - 3306
+    networks:
+      - ecommercy-net
+    volumes:
+      - ./data:/var/lib/mysql
+    environment:
+      MYSQL_RANDOM_ROOT_PASSWORD: "yes"
+      MYSQL_DATABASE: "ecommercy"
+      MYSQL_USER: "ecommercy-user"
+      MYSQL_PASSWORD: "S3cr3t"

@@ -1,0 +1,14 @@
+type Product {
+    id: ID!
+    name: String!
+    description: String
+    price: Float!
+    discount: Float
+    point: Int
+    inventory: Int!
+}
+
+type Query {
+    findAllProducts: [Product]!
+    countProducts: Int!
+}
