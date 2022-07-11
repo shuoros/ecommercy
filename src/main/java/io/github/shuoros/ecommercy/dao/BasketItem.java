@@ -1,6 +1,5 @@
 package io.github.shuoros.ecommercy.dao;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -8,9 +7,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "BASKETITEMS", schema = "ecommercy")
+@Table(name = "BASKET_ITEMS", schema = "ecommercy")
 @EntityListeners(AuditingEntityListener.class)
-@JsonIgnoreProperties(value = {"createdAt", "updatedAt"}, allowGetters = true)
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
