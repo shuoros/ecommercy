@@ -22,7 +22,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-public class Order {
+public final class Order {
 
     @Id
     @GeneratedValue(generator = "uuid2")

@@ -19,7 +19,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Getter
 @Setter
-public class Comment {
+public final class Comment {
 
     @Id
     @GeneratedValue(generator = "uuid2")

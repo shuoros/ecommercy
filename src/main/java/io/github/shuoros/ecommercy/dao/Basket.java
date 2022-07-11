@@ -17,7 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-public class Basket {
+public final class Basket {
 
     @Id
     @GeneratedValue(generator = "uuid2")

@@ -14,7 +14,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Getter
 @Setter
-public class BasketItem {
+public final class BasketItem {
 
     @Id
     @GeneratedValue(generator = "uuid2")

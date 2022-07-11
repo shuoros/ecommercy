@@ -16,7 +16,7 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @Getter
 @Setter
-public class City {
+public final class City {
 
     @Id
     @GeneratedValue(generator = "uuid2")

@@ -15,7 +15,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Getter
 @Setter
-public class OrderItem {
+public final class OrderItem {
 
     @Id
     @GeneratedValue(generator = "uuid2")

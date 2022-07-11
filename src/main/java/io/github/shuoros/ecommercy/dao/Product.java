@@ -21,7 +21,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-public class Product {
+public final class Product {
 
     @Id
     @GeneratedValue(generator = "uuid2")
