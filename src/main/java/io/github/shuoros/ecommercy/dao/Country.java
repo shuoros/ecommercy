@@ -14,7 +14,6 @@ import java.util.List;
 @Entity
 @Table(name = "COUNTRIES", schema = "ecommercy")
 @EntityListeners(AuditingEntityListener.class)
-@JsonIgnoreProperties(value = {"createdAt", "updatedAt"}, allowGetters = true)
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
