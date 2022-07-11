@@ -11,7 +11,6 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "CITIES", schema = "ecommercy")
 @EntityListeners(AuditingEntityListener.class)
-@JsonIgnoreProperties(value = {"createdAt", "updatedAt"}, allowGetters = true)
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
