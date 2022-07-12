@@ -19,7 +19,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-public class State {
+public final class State {
 
     @Id
     @GeneratedValue(generator = "uuid2")

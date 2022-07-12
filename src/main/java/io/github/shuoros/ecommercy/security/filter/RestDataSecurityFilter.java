@@ -27,18 +27,18 @@ public class RestDataSecurityFilter extends OncePerRequestFilter {
     public String TOKEN_PREFIX;
 
     private final Jwt jwtTokenUtil;
-    private final UserRepository userRepository;
+    private final CustomerRepository customerRepository;
     private final AddressRepository addressRepository;
     private final BasketRepository basketRepository;
     private final BasketItemRepository basketItemRepository;
     private final CommentRepository commentRepository;
 
     @Autowired
-    public RestDataSecurityFilter(Jwt jwtTokenUtil, UserRepository userRepository, AddressRepository addressRepository,//
+    public RestDataSecurityFilter(Jwt jwtTokenUtil, CustomerRepository customerRepository, AddressRepository addressRepository,//
                                   BasketRepository basketRepository, BasketItemRepository basketItemRepository,//
                                   CommentRepository commentRepository) {
         this.jwtTokenUtil = jwtTokenUtil;
-        this.userRepository = userRepository;
+        this.customerRepository = customerRepository;
         this.addressRepository = addressRepository;
         this.basketRepository = basketRepository;
         this.basketItemRepository = basketItemRepository;
@@ -54,34 +54,34 @@ public class RestDataSecurityFilter extends OncePerRequestFilter {
             if (header != null) {
                 String authToken = header.replace(TOKEN_PREFIX, "");
                 String username = jwtTokenUtil.getUsernameFromToken(authToken);
-                if (request.startsWith("/user/")) {
-                    Optional<User> user = userRepository.findByEmail(username);
-                    if (user.isPresent())
-                        if (!request.split("/")[2].equals(user.get().getId()))
+                if (request.startsWith("/customer/")) {
+                    Optional<Customer> customer = customerRepository.findByEmail(username);
+                    if (customer.isPresent())
+                        if (!request.split("/")[2].equals(customer.get().getId()))
                             throw new PayloadException("You are not allowed to access this resource!"//
                                     , HttpStatus.FORBIDDEN);
                 } else if (request.startsWith("/address/")) {
                     Optional<Address> address = addressRepository.findById(request.split("/")[2]);
                     if (address.isPresent())
-                        if (!address.get().getUser().getEmail().equals(username))
+                        if (!address.get().getCustomer().getEmail().equals(username))
                             throw new PayloadException("You are not allowed to access this resource!"//
                                     , HttpStatus.FORBIDDEN);
                 } else if (request.startsWith("/basket/")) {
                     Optional<Basket> basket = basketRepository.findById(request.split("/")[2]);
                     if (basket.isPresent())
-                        if (!basket.get().getUser().getEmail().equals(username))
+                        if (!basket.get().getCustomer().getEmail().equals(username))
                             throw new PayloadException("You are not allowed to access this resource!"//
                                     , HttpStatus.FORBIDDEN);
                 } else if (request.startsWith("/basketItem/")) {
                     Optional<BasketItem> basketItem = basketItemRepository.findById(request.split("/")[2]);
                     if (basketItem.isPresent())
-                        if (!basketItem.get().getBasket().getUser().getEmail().equals(username))
+                        if (!basketItem.get().getBasket().getCustomer().getEmail().equals(username))
                             throw new PayloadException("You are not allowed to access this resource!"//
                                     , HttpStatus.FORBIDDEN);
                 } else if (request.startsWith("/comment/")) {
                     Optional<Comment> comment = commentRepository.findById(request.split("/")[2]);
                     if (comment.isPresent())
-                        if (!comment.get().getUser().getEmail().equals(username))
+                        if (!comment.get().getCustomer().getEmail().equals(username))
                             throw new PayloadException("You are not allowed to access this resource!"//
                                     , HttpStatus.FORBIDDEN);
                 }

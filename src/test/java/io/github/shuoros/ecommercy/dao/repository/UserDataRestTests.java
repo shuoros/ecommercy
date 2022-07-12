@@ -2,6 +2,7 @@ package io.github.shuoros.ecommercy.dao.repository;
 
 import io.github.shuoros.ecommercy.AbstractContainerBaseTest;
 import io.github.shuoros.ecommercy.dao.User;
+import io.github.shuoros.ecommercy.dao.event.CustomerEventHandler;
 import io.github.shuoros.ecommercy.security.jwt.Jwt;
 import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
@@ -33,7 +34,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  *
  * @author Soroush Shemshadi
  * @version 1.0.0
- * @see io.github.shuoros.ecommercy.dao.repository.UserRepository
+ * @see CustomerRepository
  * @since 1.0.0
  */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -50,7 +51,7 @@ public class UserDataRestTests extends AbstractContainerBaseTest {
     private MockMvc mockMvc;
 
     @Autowired
-    private UserRepository userRepository;
+    private CustomerRepository userRepository;
 
     /**
      * Initialize the test environment.
@@ -107,7 +108,7 @@ public class UserDataRestTests extends AbstractContainerBaseTest {
      * !Endpoint allowed for anyone!
      *
      * @throws Exception Any exception that may occur during the test.
-     * @see io.github.shuoros.ecommercy.dao.event.UserEventHandler#handleBeforeCreate(User)
+     * @see CustomerEventHandler#handleBeforeCreate(User)
      */
     @Test
     void signUpUserWithMissedEmailFieldMustReturn422() throws Exception {
@@ -140,7 +141,7 @@ public class UserDataRestTests extends AbstractContainerBaseTest {
      * !Endpoint allowed for anyone!
      *
      * @throws Exception Any exception that may occur during the test.
-     * @see io.github.shuoros.ecommercy.dao.event.UserEventHandler#handleBeforeCreate(User)
+     * @see CustomerEventHandler#handleBeforeCreate(User)
      */
     @Test
     void signUpUserWithMissedNameFieldMustReturn422() throws Exception {
@@ -173,7 +174,7 @@ public class UserDataRestTests extends AbstractContainerBaseTest {
      * !Endpoint allowed for anyone!
      *
      * @throws Exception Any exception that may occur during the test.
-     * @see io.github.shuoros.ecommercy.dao.event.UserEventHandler#handleBeforeCreate(User)
+     * @see CustomerEventHandler#handleBeforeCreate(User)
      */
     @Test
     void signUpUserWithMissedPasswordFieldMustReturn422() throws Exception {
@@ -206,7 +207,7 @@ public class UserDataRestTests extends AbstractContainerBaseTest {
      * !Endpoint allowed for anyone!
      *
      * @throws Exception Any exception that may occur during the test.
-     * @see io.github.shuoros.ecommercy.dao.event.UserEventHandler#isValidPassword(String)
+     * @see CustomerEventHandler#isValidPassword(String)
      */
     @Test
     void signUpUserWithSimplePasswordFieldMustReturn422() throws Exception {
@@ -239,7 +240,7 @@ public class UserDataRestTests extends AbstractContainerBaseTest {
      * !Endpoint allowed for anyone!
      *
      * @throws Exception Any exception that may occur during the test.
-     * @see io.github.shuoros.ecommercy.dao.event.UserEventHandler#handleBeforeCreate(User)
+     * @see CustomerEventHandler#handleBeforeCreate(User)
      */
     @Test
     void signUpUserWhenAUserWithGivenEmailExistMustReturn409() throws Exception {
@@ -282,7 +283,7 @@ public class UserDataRestTests extends AbstractContainerBaseTest {
      * !Endpoint allowed for anyone!
      *
      * @throws Exception Any exception that may occur during the test.
-     * @see io.github.shuoros.ecommercy.dao.event.UserEventHandler#handleBeforeCreate(User)
+     * @see CustomerEventHandler#handleBeforeCreate(User)
      */
     @Test
     void signUpUserWhenAUserWithGivenPhoneNumberExistMustReturn409() throws Exception {
@@ -1454,7 +1455,7 @@ public class UserDataRestTests extends AbstractContainerBaseTest {
      * !Endpoint allowed for owner user and admin!
      *
      * @throws Exception Any exception that may occur during the test.
-     * @see io.github.shuoros.ecommercy.dao.event.UserEventHandler#handleBeforeSave(User)
+     * @see CustomerEventHandler#handleBeforeSave(User)
      */
     @Test
     void updateEmailOfAUserToEmailOfAExistingUserMustReturn409() throws Exception {
@@ -1508,7 +1509,7 @@ public class UserDataRestTests extends AbstractContainerBaseTest {
      * !Endpoint allowed for owner user and admin!
      *
      * @throws Exception Any exception that may occur during the test.
-     * @see io.github.shuoros.ecommercy.dao.event.UserEventHandler#handleBeforeSave(User)
+     * @see CustomerEventHandler#handleBeforeSave(User)
      */
     @Test
     void updatePhoneNumberOfAUserToPhoneNumberOfAExistingUserMustReturn409() throws Exception {

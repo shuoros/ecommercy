@@ -111,7 +111,7 @@ class EcommercyApplicationTests extends AbstractContainerBaseTest {
     private StateRepository stateRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    private CustomerRepository userRepository;
 
     @Test
     void contextLoads() {

@@ -2,23 +2,18 @@ package io.github.shuoros.ecommercy.dao;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.github.shuoros.ecommercy.dao.util.StringListConverter;
 import lombok.*;
-import org.hibernate.annotations.Cascade;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 
-@Entity
-@Table(name = "USERS", schema = "ecommercy")
-@EntityListeners(AuditingEntityListener.class)
+@MappedSuperclass
 @JsonIgnoreProperties(value = {"createdAt", "updatedAt"}, allowGetters = true)
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -45,31 +40,6 @@ public class User {
     private String name;
 
     private String lastName;
-
-    @OneToMany(mappedBy = "user")
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
-    private List<Address> addresses;
-
-    @OneToOne(mappedBy = "user")
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
-    private Basket basket;
-
-    @OneToMany(mappedBy = "user")
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
-    private List<Order> orders;
-
-    @Builder.Default
-    @Column(nullable = false)
-    private int points = 0;
-
-    @OneToMany(mappedBy = "user")
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
-    private List<Comment> comments;
-
-    @Builder.Default
-    @Convert(converter = StringListConverter.class)
-    @Column(updatable = false)
-    private List<String> roles = List.of("USER");
 
     @Builder.Default
     @Temporal(TemporalType.TIMESTAMP)

@@ -26,9 +26,9 @@ public class CommentEventHandler {
 
     @HandleBeforeCreate
     public void handleBeforeCreate(final Comment comment) {
-        if (comment.getStar() == null || comment.getProduct() == null || comment.getUser() == null)
+        if (comment.getStar() == null || comment.getProduct() == null || comment.getCustomer() == null)
             throw new PayloadException("Missing star, product or user!", HttpStatus.UNPROCESSABLE_ENTITY);
-        if (commentRepository.existsByUserAndProduct(comment.getUser(), comment.getProduct()))
+        if (commentRepository.existsByCustomerAndProduct(comment.getCustomer(), comment.getProduct()))
             throw new PayloadException("User already commented this product!", HttpStatus.UNPROCESSABLE_ENTITY);
     }
 

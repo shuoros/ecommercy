@@ -2,7 +2,7 @@ package io.github.shuoros.ecommercy.aspect;
 
 import io.github.shuoros.ecommercy.control.util.Request;
 import io.github.shuoros.ecommercy.dao.repository.AdminRepository;
-import io.github.shuoros.ecommercy.dao.repository.UserRepository;
+import io.github.shuoros.ecommercy.dao.repository.CustomerRepository;
 import io.github.shuoros.ecommercy.exception.PayloadException;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
@@ -21,12 +21,12 @@ import javax.servlet.http.HttpServletRequest;
 @Component
 public class AuthControllerAspects {
 
-    private final UserRepository userRepository;
+    private final CustomerRepository customerRepository;
     private final AdminRepository adminRepository;
 
     @Autowired
-    public AuthControllerAspects(UserRepository userRepository, AdminRepository adminRepository) {
-        this.userRepository = userRepository;
+    public AuthControllerAspects(CustomerRepository customerRepository, AdminRepository adminRepository) {
+        this.customerRepository = customerRepository;
         this.adminRepository = adminRepository;
     }
 
@@ -47,14 +47,14 @@ public class AuthControllerAspects {
             throw new UsernameNotFoundException("Invalid username or password!");
     }
 
-    @Before(value = "execution(* io.github.shuoros.ecommercy.control.AuthController.authenticateUser(..)) && args(request, payload)",//
+    @Before(value = "execution(* io.github.shuoros.ecommercy.control.AuthController.authenticateCustomer(..)) && args(request, payload)",//
             argNames = "joinPoint,request,payload")
-    public void beforeAuthenticateUser(JoinPoint joinPoint, HttpServletRequest request, String payload) {
+    public void beforeAuthenticateCustomer(JoinPoint joinPoint, HttpServletRequest request, String payload) {
         final JSONObject json = Request.deserialize(payload);
         if (json == null) throw new PayloadException("JSON syntax error!");
         if (Request.notHasKeys(json, "username", "password"))
             throw new PayloadException("Missing username or password!", HttpStatus.UNPROCESSABLE_ENTITY);
-        if (userRepository.findByEmail(json.getString("username")).isEmpty())
+        if (customerRepository.findByEmail(json.getString("username")).isEmpty())
             throw new UsernameNotFoundException("Invalid username or password!");
     }
 

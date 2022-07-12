@@ -1,5 +1,6 @@
 package io.github.shuoros.ecommercy.dao.repository;
 
+import io.github.shuoros.ecommercy.dao.Customer;
 import io.github.shuoros.ecommercy.dao.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
@@ -10,11 +11,11 @@ import java.util.Optional;
 
 @Repository
 @CrossOrigin
-@RepositoryRestResource(collectionResourceRel = "user", path = "user")
-public interface UserRepository extends JpaRepository<User, String> {
+@RepositoryRestResource(collectionResourceRel = "customer", path = "customer")
+public interface CustomerRepository extends JpaRepository<Customer, String> {
 
-    Optional<User> findByEmail(String email);
+    Optional<Customer> findByEmail(String email);
 
-    Optional<User> findByPhoneNumber(String phoneNumber);
+    Optional<Customer> findByPhoneNumber(String phoneNumber);
 
 }

@@ -1,9 +1,9 @@
 package io.github.shuoros.ecommercy.dao.event;
 
 import io.github.shuoros.ecommercy.dao.Basket;
-import io.github.shuoros.ecommercy.dao.User;
+import io.github.shuoros.ecommercy.dao.Customer;
 import io.github.shuoros.ecommercy.dao.repository.BasketRepository;
-import io.github.shuoros.ecommercy.dao.repository.UserRepository;
+import io.github.shuoros.ecommercy.dao.repository.CustomerRepository;
 import io.github.shuoros.ecommercy.exception.PayloadException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.core.annotation.HandleAfterCreate;
@@ -17,31 +17,31 @@ import org.springframework.stereotype.Component;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-@RepositoryEventHandler(User.class)
+@RepositoryEventHandler(Customer.class)
 @Component
-public class UserEventHandler {
+public class CustomerEventHandler {
 
-    private final UserRepository userRepository;
+    private final CustomerRepository customerRepository;
     private final BasketRepository basketRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public UserEventHandler(UserRepository userRepository, BasketRepository basketRepository,//
-                            BCryptPasswordEncoder bCryptPasswordEncoder) {
-        this.userRepository = userRepository;
+    public CustomerEventHandler(CustomerRepository customerRepository, BasketRepository basketRepository,//
+                                BCryptPasswordEncoder bCryptPasswordEncoder) {
+        this.customerRepository = customerRepository;
         this.basketRepository = basketRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @HandleBeforeCreate
-    public void handleBeforeCreate(final User user) {
-        if (user.getName() == null || user.getEmail() == null || user.getPassword() == null)
+    public void handleBeforeCreate(final Customer customer) {
+        if (customer.getName() == null || customer.getEmail() == null || customer.getPassword() == null)
             throw new PayloadException("Missing name, email or password!", HttpStatus.UNPROCESSABLE_ENTITY);
-        if (userRepository.findByEmail(user.getEmail()).isPresent())
+        if (customerRepository.findByEmail(customer.getEmail()).isPresent())
             throw new PayloadException("User with such email already exists!", HttpStatus.CONFLICT);
-        if (user.getPhoneNumber() != null && userRepository.findByPhoneNumber(user.getPhoneNumber()).isPresent())
+        if (customer.getPhoneNumber() != null && customerRepository.findByPhoneNumber(customer.getPhoneNumber()).isPresent())
             throw new PayloadException("User with such phone number already exists!", HttpStatus.CONFLICT);
-        if (!isValidPassword(user.getPassword()))
+        if (!isValidPassword(customer.getPassword()))
             throw new PayloadException("Your password is not compatible! Consider choosing password with " +
                     "1-at least 8 characters and at most 20 characters. " +
                     "2-at least one digit. " +
@@ -49,24 +49,24 @@ public class UserEventHandler {
                     "4-at least one lower case alphabet. " +
                     "5-at least one special character which includes !@#$%&*()-+=^.", HttpStatus.UNPROCESSABLE_ENTITY);
 
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        customer.setPassword(bCryptPasswordEncoder.encode(customer.getPassword()));
     }
 
     @HandleAfterCreate
-    public void handleAfterCreateUser(final User user) {
+    public void handleAfterCreateUser(final Customer customer) {
         basketRepository.save(Basket.builder()//
-                .user(user)//
+                .customer(customer)//
                 .build());
     }
 
     @HandleBeforeSave
-    public void handleBeforeSave(final User user) {
-        if (userRepository.findByEmail(user.getEmail()).isPresent()//
-                && !userRepository.findByEmail(user.getEmail()).get().getId().equals(user.getId()))
+    public void handleBeforeSave(final Customer customer) {
+        if (customerRepository.findByEmail(customer.getEmail()).isPresent()//
+                && !customerRepository.findByEmail(customer.getEmail()).get().getId().equals(customer.getId()))
             throw new PayloadException("User with such email already exists!", HttpStatus.CONFLICT);
-        if (user.getPhoneNumber() != null//
-                && userRepository.findByPhoneNumber(user.getPhoneNumber()).isPresent()//
-                && !userRepository.findByPhoneNumber(user.getPhoneNumber()).get().getId().equals(user.getId()))
+        if (customer.getPhoneNumber() != null//
+                && customerRepository.findByPhoneNumber(customer.getPhoneNumber()).isPresent()//
+                && !customerRepository.findByPhoneNumber(customer.getPhoneNumber()).get().getId().equals(customer.getId()))
             throw new PayloadException("User with such phone number already exists!", HttpStatus.CONFLICT);
     }
 

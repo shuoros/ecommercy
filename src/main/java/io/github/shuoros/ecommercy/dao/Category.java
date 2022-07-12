@@ -16,7 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-public class Category {
+public final class Category {
 
     @Id
     @GeneratedValue(generator = "uuid2")
