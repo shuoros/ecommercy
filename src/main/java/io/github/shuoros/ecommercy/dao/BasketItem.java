@@ -28,7 +28,7 @@ public final class BasketItem {
 
     @OneToOne
     @JoinColumn(nullable = false)
-    private Product product;
+    private ProductValueAttribute product;
 
     @Column(nullable = false)
     private Integer quantity;

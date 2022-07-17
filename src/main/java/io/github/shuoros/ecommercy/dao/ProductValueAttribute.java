@@ -1,22 +1,20 @@
 package io.github.shuoros.ecommercy.dao;
 
 import lombok.*;
-import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
-@Table(name = "ATTRIBUTES", schema = "ecommercy")
+@Table(name = "PRODUCTS_VALUE_ATTRIBUTES", schema = "ecommercy")
 @EntityListeners(AuditingEntityListener.class)
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public final class Attribute {
+public final class ProductValueAttribute {
 
     @Id
     @GeneratedValue(generator = "uuid2")
@@ -27,8 +25,26 @@ public final class Attribute {
     @Column(nullable = false, unique = true)
     private String name;
 
-    @OneToMany(mappedBy = "attribute")
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
-    private List<ProductValueAttribute> attributeValues;
+    @Column(nullable = false)
+    private Float price;
+
+    @Builder.Default
+    @Column(nullable = false)
+    private Float discount = 0.0F;
+
+    @Builder.Default
+    @Column(nullable = false)
+    private int point = 0;
+
+    @Column(nullable = false)
+    private Integer inventory;
+
+    @ManyToOne
+    @JoinColumn(name = "attribute_id", referencedColumnName = "id")
+    private Attribute attribute;
+
+    @ManyToOne
+    @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false)
+    private Product product;
 
 }
