@@ -35,8 +35,11 @@ public final class Address {
     private State state;
 
     @OneToOne
-    @JoinColumn(name = "city_id", referencedColumnName = "id", nullable = false)
-    private City city;
+    @JoinColumn(name = "county_id", referencedColumnName = "id", nullable = false)
+    private County county;
+
+    @Column(nullable = false)
+    private String city;
 
     @Column(nullable = false)
     private String addressLine1;

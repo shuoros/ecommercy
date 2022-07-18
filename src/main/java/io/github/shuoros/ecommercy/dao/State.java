@@ -7,7 +7,6 @@ import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
@@ -31,12 +30,12 @@ public final class State {
     @JoinColumn(name = "country_id", referencedColumnName = "id")
     private Country country;
 
-    @NotNull
+    @Column(nullable = false, unique = true)
     private String name;
 
     @OneToMany(mappedBy = "state", fetch = FetchType.EAGER)
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
-    private List<City> cities;
+    private List<County> counties;
 
 
 

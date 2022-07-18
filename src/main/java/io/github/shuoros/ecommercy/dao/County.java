@@ -1,22 +1,20 @@
 package io.github.shuoros.ecommercy.dao;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "CITIES", schema = "ecommercy")
+@Table(name = "COUNTIES", schema = "ecommercy")
 @EntityListeners(AuditingEntityListener.class)
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public final class City {
+public final class County {
 
     @Id
     @GeneratedValue(generator = "uuid2")
@@ -28,7 +26,7 @@ public final class City {
     @JoinColumn(name = "state_id", referencedColumnName = "id")
     private State state;
 
-    @NotNull
+    @Column(nullable = false, unique = true)
     private String name;
 
 }
