@@ -26,7 +26,7 @@ public final class Country {
     @Column(updatable = false, nullable = false, columnDefinition = "VARCHAR(255)")
     private String id;
 
-    @NotNull
+    @Column(nullable = false, unique = true)
     private String name;
 
     @OneToMany(mappedBy = "country", fetch = FetchType.EAGER)
