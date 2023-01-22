@@ -21,13 +21,30 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-public class Product {
+public final class Product {
 
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
     @Column(updatable = false, nullable = false, columnDefinition = "VARCHAR(255)")
     private String id;
+
+    @Column(nullable = false)
+    private String name;
+
+    private String description;
+
+    @Builder.Default
+    @Column(nullable = false)
+    private float stars = -1;
+
+    @OneToMany(mappedBy = "product")
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    private List<ProductValueAttribute> valueAttributes;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "products_value_attributes_id", referencedColumnName = "id", nullable = false)
+    private List<ProductNonValueAttribute> nonValueAttributes;
 
     @ManyToOne
     @JoinColumn(name = "group_id", referencedColumnName = "id", nullable = false)
@@ -37,32 +54,9 @@ public class Product {
     @JoinColumn(name = "category_id", referencedColumnName = "id", nullable = false)
     private List<Category> categories;
 
-    @Column(nullable = false)
-    private String name;
-
-    private String description;
-
-    @Column(nullable = false)
-    private Float price;
-
-    @Builder.Default
-    @Column(nullable = false)
-    private Float discount = 0.0F;
-
-    @Builder.Default
-    @Column(nullable = false)
-    private int point = 0;
-
-    @Column(nullable = false)
-    private Integer inventory;
-
     @OneToMany(mappedBy = "product")
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private List<Comment> comments;
-
-    @Builder.Default
-    @Column(nullable = false)
-    private float stars = -1;
 
     @Builder.Default
     @Temporal(TemporalType.TIMESTAMP)

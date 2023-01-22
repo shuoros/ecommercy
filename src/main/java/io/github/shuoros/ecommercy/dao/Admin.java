@@ -1,60 +1,28 @@
 package io.github.shuoros.ecommercy.dao;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import io.github.shuoros.ecommercy.dao.util.StringListConverter;
-import lombok.*;
-import org.hibernate.annotations.GenericGenerator;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.util.Date;
 import java.util.List;
 
 @Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Table(name = "ADMINS", schema = "ecommercy")
-@EntityListeners(AuditingEntityListener.class)
-@JsonIgnoreProperties(value = {"createdAt", "updatedAt"}, allowGetters = true)
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class Admin {
+public final class Admin extends User {
 
-    @Id
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
-    @Column(updatable = false, nullable = false, columnDefinition = "VARCHAR(255)")
-    private String id;
-
-    @NotNull
-    private String name;
-
-    @NotNull
-    private String email;
-
-    @NotNull
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private String password;
-
-    @Builder.Default
-    @Convert(converter = StringListConverter.class)
-    private List<String> roles = List.of("ADMIN");
-
-    @Builder.Default
-    @Column(nullable = false, updatable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    @CreatedDate
-    private Date createdAt = new Date();
-
-    @Builder.Default
-    @Column(nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    @LastModifiedDate
-    private Date updatedAt = new Date();
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "ADMINS_ROLES",
+            joinColumns = {@JoinColumn(name = "admin_id")},
+            inverseJoinColumns = {@JoinColumn(name = "role_name")})
+    private List<Role> roles;
 
 }

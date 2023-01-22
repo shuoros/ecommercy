@@ -65,26 +65,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // User API
                 .antMatchers(HttpMethod.POST, "/user").permitAll()//
                 .antMatchers(HttpMethod.GET, "/user").hasAnyAuthority("ADMIN")//
-                .antMatchers("/user/**").hasAnyAuthority("USER", "ADMIN")//
+                .antMatchers("/user/**").hasAnyAuthority("CUSTOMER", "ADMIN")//
                 // Address API
                 .antMatchers(HttpMethod.GET, "/address").hasAnyAuthority("ADMIN")//
-                .antMatchers(HttpMethod.POST, "/address").hasAnyAuthority("USER", "ADMIN")//
-                .antMatchers("/address/**").hasAnyAuthority("USER", "ADMIN")//
+                .antMatchers(HttpMethod.POST, "/address").hasAnyAuthority("CUSTOMER", "ADMIN")//
+                .antMatchers("/address/**").hasAnyAuthority("CUSTOMER", "ADMIN")//
                 // Basket API
                 .antMatchers(HttpMethod.POST, "/basket").denyAll()//
                 .antMatchers(HttpMethod.PUT, "/basket/**").denyAll()//
                 .antMatchers(HttpMethod.PATCH, "/basket/**").denyAll()//
                 .antMatchers(HttpMethod.DELETE, "/basket/**").denyAll()//
                 .antMatchers(HttpMethod.GET, "/basket").hasAnyAuthority("ADMIN")//
-                .antMatchers(HttpMethod.GET, "/basket/**").hasAnyAuthority("USER", "ADMIN")//
+                .antMatchers(HttpMethod.GET, "/basket/**").hasAnyAuthority("CUSTOMER", "ADMIN")//
                 // BasketItem API
                 .antMatchers(HttpMethod.GET, "/basketItem").hasAnyAuthority("ADMIN")//
-                .antMatchers(HttpMethod.POST, "/basketItem").hasAnyAuthority("USER", "ADMIN")//
-                .antMatchers("/basketItem/**").hasAnyAuthority("USER", "ADMIN")//
+                .antMatchers(HttpMethod.POST, "/basketItem").hasAnyAuthority("CUSTOMER", "ADMIN")//
+                .antMatchers("/basketItem/**").hasAnyAuthority("CUSTOMER", "ADMIN")//
                 // Comment API
                 .antMatchers(HttpMethod.GET, "/comment").hasAnyAuthority("ADMIN")//
-                .antMatchers(HttpMethod.POST, "/comment").hasAnyAuthority("USER", "ADMIN")//
-                .antMatchers("/comment/**").hasAnyAuthority("USER", "ADMIN")//
+                .antMatchers(HttpMethod.POST, "/comment").hasAnyAuthority("CUSTOMER", "ADMIN")//
+                .antMatchers("/comment/**").hasAnyAuthority("CUSTOMER", "ADMIN")//
                 // Product API
                 .antMatchers(HttpMethod.POST, "/product").hasAnyAuthority("ADMIN")//
                 .antMatchers(HttpMethod.PUT, "/product/**").hasAnyAuthority("ADMIN")//

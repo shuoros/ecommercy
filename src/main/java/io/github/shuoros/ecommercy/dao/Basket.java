@@ -1,6 +1,5 @@
 package io.github.shuoros.ecommercy.dao;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.GenericGenerator;
@@ -13,13 +12,12 @@ import java.util.List;
 @Entity
 @Table(name = "BASKETS", schema = "ecommercy")
 @EntityListeners(AuditingEntityListener.class)
-@JsonIgnoreProperties(value = {"createdAt", "updatedAt"}, allowGetters = true)
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class Basket {
+public final class Basket {
 
     @Id
     @GeneratedValue(generator = "uuid2")
@@ -29,8 +27,8 @@ public class Basket {
 
     @NotNull
     @OneToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private User user;
+    @JoinColumn(name = "customer_id", referencedColumnName = "id")
+    private Customer customer;
 
     @OneToMany(mappedBy = "basket")
     @Cascade(org.hibernate.annotations.CascadeType.ALL)

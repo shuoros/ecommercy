@@ -4,10 +4,13 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -19,7 +22,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-public class Order {
+public final class Order {
 
     @Id
     @GeneratedValue(generator = "uuid2")
@@ -29,8 +32,8 @@ public class Order {
 
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private User user;
+    @JoinColumn(name = "customer_id", referencedColumnName = "id")
+    private Customer customer;
 
     @OneToOne
     @JoinColumn(name = "address_id", referencedColumnName = "id")
@@ -47,5 +50,17 @@ public class Order {
     @NotNull
     @Builder.Default
     private double discount = 0.0;
+
+    @Builder.Default
+    @Temporal(TemporalType.TIMESTAMP)
+    @CreatedDate
+    @Column(nullable = false, updatable = false)
+    private Date createdAt = new Date();
+
+    @Builder.Default
+    @Column(nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    @LastModifiedDate
+    private Date updatedAt = new Date();
 
 }

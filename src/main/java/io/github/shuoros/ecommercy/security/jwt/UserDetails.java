@@ -1,9 +1,10 @@
 package io.github.shuoros.ecommercy.security.jwt;
 
 import io.github.shuoros.ecommercy.dao.Admin;
-import io.github.shuoros.ecommercy.dao.User;
+import io.github.shuoros.ecommercy.dao.Customer;
+import io.github.shuoros.ecommercy.dao.Role;
 import io.github.shuoros.ecommercy.dao.repository.AdminRepository;
-import io.github.shuoros.ecommercy.dao.repository.UserRepository;
+import io.github.shuoros.ecommercy.dao.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -20,21 +21,21 @@ import java.util.stream.Collectors;
 @Service(value = "userDetailsService")
 public class UserDetails implements UserDetailsService {
 
-    private final UserRepository userRepository;
+    private final CustomerRepository customerRepository;
     private final AdminRepository adminRepository;
 
     @Autowired
-    public UserDetails(UserRepository userRepository, AdminRepository adminRepository) {
-        this.userRepository = userRepository;
+    public UserDetails(CustomerRepository customerRepository, AdminRepository adminRepository) {
+        this.customerRepository = customerRepository;
         this.adminRepository = adminRepository;
     }
 
     @Override
     public org.springframework.security.core.userdetails.UserDetails loadUserByUsername(String name)
             throws UsernameNotFoundException {
-        if (userRepository.findByEmail(name).isPresent()) {
-            User user = userRepository.findByEmail(name).get();
-            return getUserDetails(user.getRoles(), user.getEmail(), user.getPassword());
+        if (customerRepository.findByEmail(name).isPresent()) {
+            Customer customer = customerRepository.findByEmail(name).get();
+            return getUserDetails(List.of(Role.builder().name("CUSTOMER").build()), customer.getEmail(), customer.getPassword());
         } else if (adminRepository.findByEmail(name).isPresent()) {
             Admin admin = adminRepository.findByEmail(name).get();
             return getUserDetails(admin.getRoles(), admin.getEmail(), admin.getPassword());
@@ -42,9 +43,8 @@ public class UserDetails implements UserDetailsService {
             throw new UsernameNotFoundException("Invalid email or password.");
     }
 
-    private org.springframework.security.core.userdetails.UserDetails getUserDetails(List<String> roles, String email, String password) {
-        List<String> listRoles = new ArrayList<>(roles);
-        List<GrantedAuthority> authorities = listRoles.stream().map(SimpleGrantedAuthority::new)
+    private org.springframework.security.core.userdetails.UserDetails getUserDetails(List<Role> roles, String email, String password) {
+        List<GrantedAuthority> authorities = roles.stream().map(Role::getName).map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
         return new org.springframework.security.core.userdetails.User(email, password,
                 authorities);

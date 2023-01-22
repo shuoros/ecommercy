@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Objects;
 
 @RestController
 @Slf4j
@@ -35,14 +36,14 @@ public class AuthController {
 
     @PostMapping(value = "/authenticate/admin", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> authenticateAdmin(HttpServletRequest req, @RequestBody String payload) {
-        final String token = authCredentials(Request.deserialize(payload));
+        final String token = authCredentials(Objects.requireNonNull(Request.deserialize(payload)));
         return Response.success("Authentication completed successfully!", token, HttpStatus.OK).serialize();
 
     }
 
-    @PostMapping(value = "/authenticate/user", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> authenticateUser(HttpServletRequest req, @RequestBody String payload) {
-        final String token = authCredentials(Request.deserialize(payload));
+    @PostMapping(value = "/authenticate/customer", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> authenticateCustomer(HttpServletRequest req, @RequestBody String payload) {
+        final String token = authCredentials(Objects.requireNonNull(Request.deserialize(payload)));
         return Response.success("Authentication completed successfully!", token, HttpStatus.OK).serialize();
     }
 

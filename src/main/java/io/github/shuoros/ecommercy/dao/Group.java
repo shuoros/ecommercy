@@ -16,7 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-public class Group {
+public final class Group {
 
     @Id
     @GeneratedValue(generator = "uuid2")

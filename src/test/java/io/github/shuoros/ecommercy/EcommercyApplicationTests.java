@@ -87,7 +87,7 @@ class EcommercyApplicationTests extends AbstractContainerBaseTest {
     private CategoryRepository categoryRepository;
 
     @Autowired
-    private CityRepository cityRepository;
+    private CountyRepository countyRepository;
 
     @Autowired
     private CountryRepository countryRepository;
@@ -111,7 +111,7 @@ class EcommercyApplicationTests extends AbstractContainerBaseTest {
     private StateRepository stateRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    private CustomerRepository userRepository;
 
     @Test
     void contextLoads() {
@@ -215,7 +215,7 @@ class EcommercyApplicationTests extends AbstractContainerBaseTest {
 
     @Test
     void cityRepositoryLoads() {
-        assertNotNull(cityRepository);
+        assertNotNull(countyRepository);
     }
 
     @Test

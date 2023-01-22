@@ -19,7 +19,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Getter
 @Setter
-public class Comment {
+public final class Comment {
 
     @Id
     @GeneratedValue(generator = "uuid2")
@@ -31,8 +31,8 @@ public class Comment {
     private Integer star;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
-    private User user;
+    @JoinColumn(name = "customer_id", referencedColumnName = "id", nullable = false)
+    private Customer customer;
 
     @ManyToOne
     @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false)
