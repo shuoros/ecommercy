@@ -9,14 +9,14 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "CATEGORIES", schema = "ecommercy")
+@Table(name = "ATTRIBUTES", schema = "ecommercy")
 @EntityListeners(AuditingEntityListener.class)
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public final class Category {
+public final class Attribute {
 
     @Id
     @GeneratedValue(generator = "uuid2")
@@ -24,17 +24,11 @@ public final class Category {
     @Column(updatable = false, nullable = false, columnDefinition = "VARCHAR(255)")
     private String id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String name;
 
-    private String description;
-
-    @ManyToOne
-    @JoinColumn(name = "group_id", referencedColumnName = "id", nullable = false)
-    private Group group;
-
-    @ManyToMany(mappedBy = "categories")
+    @OneToMany(mappedBy = "attribute")
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
-    private List<Product> products;
+    private List<ProductValueAttribute> attributeValues;
 
 }
