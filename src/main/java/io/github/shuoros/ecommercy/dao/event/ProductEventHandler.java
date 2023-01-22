@@ -13,10 +13,10 @@ public class ProductEventHandler {
 
     @HandleBeforeCreate
     public void handleBeforeCreate(final Product product) {
-        if (product.getGroup() == null || product.getCategories() == null || product.getName() == null ||//
-                product.getPrice() == null || product.getInventory() == null) {
-            throw new PayloadException("Missing group, categories, name, price or inventory!", HttpStatus.UNPROCESSABLE_ENTITY);
-        }
+//        if (product.getGroup() == null || product.getCategories() == null || product.getName() == null ||//
+//                product.getPrice() == null || product.getInventory() == null) {
+//            throw new PayloadException("Missing group, categories, name, price or inventory!", HttpStatus.UNPROCESSABLE_ENTITY);
+//        }
     }
 
 }
