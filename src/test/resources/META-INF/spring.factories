@@ -1,1 +1,1 @@
-org.springframework.test.context.ContextCustomizerFactory = io.github.shuoros.config.TestContainersSpringContextCustomizerFactory
+org.springframework.test.context.ContextCustomizerFactory = io.github.shuoros.ecommercy.config.TestContainersSpringContextCustomizerFactory
