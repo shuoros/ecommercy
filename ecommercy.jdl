@@ -1,0 +1,111 @@
+entity Product{
+    name String
+    brand String
+    rate Integer
+    description String
+}
+entity Picture{
+    path String
+}
+entity Group{
+    name String
+}
+
+entity Category{
+    name String
+}
+entity Attribute{
+    key String
+    value String
+}
+entity AttributeDetail{
+    price BigDecimal
+    discount Integer
+}
+entity Item{
+    quantity Integer
+    price BigDecimal
+}
+entity Order{
+    status OrderStatus
+    coupon String
+    receive ZonedDateTime
+}
+entity Coupon{
+    code String
+    type CouponType
+    expiration ZonedDateTime
+}
+enum CouponType{
+    PUBLIC
+    PRIVATE
+}
+entity Basket{
+    score Integer
+    price BigDecimal
+}
+enum OrderStatus{
+    NEW
+    PROCESSING
+    SENT
+    RECEIVED
+    RETURNED
+}
+entity Customer{
+    score Integer
+}
+entity Comment{
+    text String
+}
+entity City{
+    name String
+}
+entity State{
+    name String
+}
+entity Address{
+    street1 String
+    street2 String
+    unit String
+    zipCode String
+    phoneNumber String
+    longitude Double
+    latitude Double
+}
+entity Country{
+    name String
+}
+relationship OneToMany{
+    Group to Category
+    Product to Comment
+    Customer to Basket
+    Customer to Comment
+    Country to State
+    State to City
+    Customer to Address
+    Product to Picture
+    Basket to Item
+}
+relationship ManyToOne{
+    Item to Product
+    Order to Coupon
+}
+relationship ManyToMany{
+    Product to Attribute
+    Category to Product
+    Item to Product
+    Coupon to Customer
+}
+relationship OneToOne{
+    Product{mainPic} to Picture
+    Basket to Order
+    Customer to User
+    Order to Address
+    AttributeDetail to Attribute
+    Product to AttributeDetail
+}
+
+
+
+
+
