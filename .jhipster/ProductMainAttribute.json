@@ -1,0 +1,39 @@
+{
+  "applications": "*",
+  "changelogDate": "20230220085320",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "product_main_attribute",
+  "fields": [
+    {
+      "fieldName": "price",
+      "fieldType": "BigDecimal"
+    },
+    {
+      "fieldName": "discount",
+      "fieldType": "Integer"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "ProductMainAttribute",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "attribute",
+      "otherEntityRelationshipName": "productMainAttribute",
+      "ownerSide": true,
+      "relationshipName": "attribute",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityName": "product",
+      "otherEntityRelationshipName": "productMainAttribute",
+      "ownerSide": false,
+      "relationshipName": "product",
+      "relationshipType": "one-to-one"
+    }
+  ],
+  "service": "no"
+}

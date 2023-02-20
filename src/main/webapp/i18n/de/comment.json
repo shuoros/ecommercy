@@ -1,0 +1,26 @@
+{
+  "ecommercyApp": {
+    "comment": {
+      "home": {
+        "title": "Comments",
+        "refreshListLabel": "Liste aktualisieren",
+        "createLabel": "Comment erstellen",
+        "createOrEditLabel": "Comment erstellen oder bearbeiten",
+        "notFound": "Keine Comments gefunden"
+      },
+      "created": "Comment erstellt mit ID {{ param }}",
+      "updated": "Comment aktualisiert mit ID {{ param }}",
+      "deleted": "Comment gelöscht mit ID {{ param }}",
+      "delete": {
+        "question": "Soll Comment {{ id }} wirklich dauerhaft gelöscht werden?"
+      },
+      "detail": {
+        "title": "Comment"
+      },
+      "id": "ID",
+      "text": "Text",
+      "product": "Product",
+      "customer": "Customer"
+    }
+  }
+}

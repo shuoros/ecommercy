@@ -1,0 +1,9 @@
+{
+  "ecommercyApp": {
+    "CouponType": {
+      "null": "",
+      "PUBLIC": "PUBLIC",
+      "PRIVATE": "PRIVATE"
+    }
+  }
+}

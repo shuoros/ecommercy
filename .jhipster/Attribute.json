@@ -1,0 +1,39 @@
+{
+  "applications": "*",
+  "changelogDate": "20230220085319",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "attribute",
+  "fields": [
+    {
+      "fieldName": "key",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "value",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Attribute",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "productMainAttribute",
+      "otherEntityRelationshipName": "attribute",
+      "ownerSide": false,
+      "relationshipName": "productMainAttribute",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityName": "product",
+      "otherEntityRelationshipName": "attribute",
+      "ownerSide": false,
+      "relationshipName": "product",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "service": "no"
+}

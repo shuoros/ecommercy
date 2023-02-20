@@ -1,0 +1,29 @@
+{
+  "ecommercyApp": {
+    "order": {
+      "home": {
+        "title": "Orders",
+        "refreshListLabel": "Liste aktualisieren",
+        "createLabel": "Order erstellen",
+        "createOrEditLabel": "Order erstellen oder bearbeiten",
+        "notFound": "Keine Orders gefunden"
+      },
+      "created": "Order erstellt mit ID {{ param }}",
+      "updated": "Order aktualisiert mit ID {{ param }}",
+      "deleted": "Order gelöscht mit ID {{ param }}",
+      "delete": {
+        "question": "Soll Order {{ id }} wirklich dauerhaft gelöscht werden?"
+      },
+      "detail": {
+        "title": "Order"
+      },
+      "id": "ID",
+      "status": "Status",
+      "coupon": "Coupon",
+      "receive": "Receive",
+      "address": "Address",
+      "coupon": "Coupon",
+      "basket": "Basket"
+    }
+  }
+}

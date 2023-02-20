@@ -1,0 +1,28 @@
+{
+  "ecommercyApp": {
+    "coupon": {
+      "home": {
+        "title": "Coupons",
+        "refreshListLabel": "Liste aktualisieren",
+        "createLabel": "Coupon erstellen",
+        "createOrEditLabel": "Coupon erstellen oder bearbeiten",
+        "notFound": "Keine Coupons gefunden"
+      },
+      "created": "Coupon erstellt mit ID {{ param }}",
+      "updated": "Coupon aktualisiert mit ID {{ param }}",
+      "deleted": "Coupon gelöscht mit ID {{ param }}",
+      "delete": {
+        "question": "Soll Coupon {{ id }} wirklich dauerhaft gelöscht werden?"
+      },
+      "detail": {
+        "title": "Coupon"
+      },
+      "id": "ID",
+      "code": "Code",
+      "type": "Type",
+      "expiration": "Expiration",
+      "customer": "Customer",
+      "order": "Order"
+    }
+  }
+}

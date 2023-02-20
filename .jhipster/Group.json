@@ -1,0 +1,27 @@
+{
+  "applications": "*",
+  "changelogDate": "20230220085317",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "jhi_group",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Group",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "category",
+      "otherEntityRelationshipName": "group",
+      "relationshipName": "category",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "no"
+}

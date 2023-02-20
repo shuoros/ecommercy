@@ -1,4 +1,4 @@
-entity Product{
+entity Product {
     name String
     brand String
     rate Integer
@@ -18,7 +18,7 @@ entity Attribute{
     key String
     value String
 }
-entity AttributeDetail{
+entity ProductMainAttribute{
     price BigDecimal
     discount Integer
 }
@@ -93,7 +93,6 @@ relationship ManyToOne{
 relationship ManyToMany{
     Product to Attribute
     Category to Product
-    Item to Product
     Coupon to Customer
 }
 relationship OneToOne{
@@ -101,8 +100,8 @@ relationship OneToOne{
     Basket to Order
     Customer to User
     Order to Address
-    AttributeDetail to Attribute
-    Product to AttributeDetail
+    ProductMainAttribute to Attribute
+    Product to ProductMainAttribute
 }
 
 

@@ -1,0 +1,27 @@
+{
+  "ecommercyApp": {
+    "productMainAttribute": {
+      "home": {
+        "title": "Product Main Attributes",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Product Main Attribute",
+        "createOrEditLabel": "Create or edit a Product Main Attribute",
+        "notFound": "No Product Main Attributes found"
+      },
+      "created": "A new Product Main Attribute is created with identifier {{ param }}",
+      "updated": "A Product Main Attribute is updated with identifier {{ param }}",
+      "deleted": "A Product Main Attribute is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Product Main Attribute {{ id }}?"
+      },
+      "detail": {
+        "title": "Product Main Attribute"
+      },
+      "id": "ID",
+      "price": "Price",
+      "discount": "Discount",
+      "attribute": "Attribute",
+      "product": "Product"
+    }
+  }
+}

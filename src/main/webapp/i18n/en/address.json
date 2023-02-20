@@ -1,0 +1,32 @@
+{
+  "ecommercyApp": {
+    "address": {
+      "home": {
+        "title": "Addresses",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Address",
+        "createOrEditLabel": "Create or edit a Address",
+        "notFound": "No Addresses found"
+      },
+      "created": "A new Address is created with identifier {{ param }}",
+      "updated": "A Address is updated with identifier {{ param }}",
+      "deleted": "A Address is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Address {{ id }}?"
+      },
+      "detail": {
+        "title": "Address"
+      },
+      "id": "ID",
+      "street1": "Street 1",
+      "street2": "Street 2",
+      "unit": "Unit",
+      "zipCode": "Zip Code",
+      "phoneNumber": "Phone Number",
+      "longitude": "Longitude",
+      "latitude": "Latitude",
+      "order": "Order",
+      "customer": "Customer"
+    }
+  }
+}

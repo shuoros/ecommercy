@@ -7,6 +7,22 @@
       "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
       "entities": {
         "main": "Entities",
+        "product": "Product",
+        "picture": "Picture",
+        "group": "Group",
+        "category": "Category",
+        "attribute": "Attribute",
+        "productMainAttribute": "Product Main Attribute",
+        "item": "Item",
+        "order": "Order",
+        "coupon": "Coupon",
+        "basket": "Basket",
+        "customer": "Customer",
+        "comment": "Comment",
+        "city": "City",
+        "state": "State",
+        "address": "Address",
+        "country": "Country",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {
