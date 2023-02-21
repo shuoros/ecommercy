@@ -28,7 +28,6 @@ entity Item{
 }
 entity Order{
     status OrderStatus
-    coupon String
     receive ZonedDateTime
 }
 entity Coupon{

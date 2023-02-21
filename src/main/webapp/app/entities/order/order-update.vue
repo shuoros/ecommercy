@@ -35,18 +35,6 @@
             </select>
           </div>
           <div class="form-group">
-            <label class="form-control-label" v-text="$t('ecommercyApp.order.coupon')" for="order-coupon">Coupon</label>
-            <input
-              type="text"
-              class="form-control"
-              name="coupon"
-              id="order-coupon"
-              data-cy="coupon"
-              :class="{ valid: !$v.order.coupon.$invalid, invalid: $v.order.coupon.$invalid }"
-              v-model="$v.order.coupon.$model"
-            />
-          </div>
-          <div class="form-group">
             <label class="form-control-label" v-text="$t('ecommercyApp.order.receive')" for="order-receive">Receive</label>
             <div class="d-flex">
               <input

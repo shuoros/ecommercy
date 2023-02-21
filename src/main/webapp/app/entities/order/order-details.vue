@@ -13,12 +13,6 @@
             <span v-text="$t('ecommercyApp.OrderStatus.' + order.status)">{{ order.status }}</span>
           </dd>
           <dt>
-            <span v-text="$t('ecommercyApp.order.coupon')">Coupon</span>
-          </dt>
-          <dd>
-            <span>{{ order.coupon }}</span>
-          </dd>
-          <dt>
             <span v-text="$t('ecommercyApp.order.receive')">Receive</span>
           </dt>
           <dd>

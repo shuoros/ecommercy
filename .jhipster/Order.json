@@ -11,10 +11,6 @@
       "fieldValues": "NEW,PROCESSING,SENT,RECEIVED,RETURNED"
     },
     {
-      "fieldName": "coupon",
-      "fieldType": "String"
-    },
-    {
       "fieldName": "receive",
       "fieldType": "ZonedDateTime"
     }

@@ -34,7 +34,7 @@ describe('Service Tests', () => {
     beforeEach(() => {
       service = new OrderService();
       currentDate = new Date();
-      elemDefault = new Order(123, OrderStatus.NEW, 'AAAAAAA', currentDate);
+      elemDefault = new Order(123, OrderStatus.NEW, currentDate);
     });
 
     describe('Service methods', () => {
@@ -98,7 +98,6 @@ describe('Service Tests', () => {
         const returnedFromService = Object.assign(
           {
             status: 'BBBBBB',
-            coupon: 'BBBBBB',
             receive: dayjs(currentDate).format(DATE_TIME_FORMAT),
           },
           elemDefault
@@ -132,7 +131,6 @@ describe('Service Tests', () => {
         const patchObject = Object.assign(
           {
             status: 'BBBBBB',
-            receive: dayjs(currentDate).format(DATE_TIME_FORMAT),
           },
           new Order()
         );
@@ -166,7 +164,6 @@ describe('Service Tests', () => {
         const returnedFromService = Object.assign(
           {
             status: 'BBBBBB',
-            coupon: 'BBBBBB',
             receive: dayjs(currentDate).format(DATE_TIME_FORMAT),
           },
           elemDefault

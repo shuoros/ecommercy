@@ -21,7 +21,6 @@ import { OrderStatus } from '@/shared/model/enumerations/order-status.model';
 const validations: any = {
   order: {
     status: {},
-    coupon: {},
     receive: {},
   },
 };

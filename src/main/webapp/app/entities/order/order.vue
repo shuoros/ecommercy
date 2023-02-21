@@ -30,7 +30,6 @@
           <tr>
             <th scope="row"><span v-text="$t('global.field.id')">ID</span></th>
             <th scope="row"><span v-text="$t('ecommercyApp.order.status')">Status</span></th>
-            <th scope="row"><span v-text="$t('ecommercyApp.order.coupon')">Coupon</span></th>
             <th scope="row"><span v-text="$t('ecommercyApp.order.receive')">Receive</span></th>
             <th scope="row"><span v-text="$t('ecommercyApp.order.address')">Address</span></th>
             <th scope="row"><span v-text="$t('ecommercyApp.order.coupon')">Coupon</span></th>
@@ -43,7 +42,6 @@
               <router-link :to="{ name: 'OrderView', params: { orderId: order.id } }">{{ order.id }}</router-link>
             </td>
             <td v-text="$t('ecommercyApp.OrderStatus.' + order.status)">{{ order.status }}</td>
-            <td>{{ order.coupon }}</td>
             <td>{{ order.receive ? $d(Date.parse(order.receive), 'short') : '' }}</td>
             <td>
               <div v-if="order.address">

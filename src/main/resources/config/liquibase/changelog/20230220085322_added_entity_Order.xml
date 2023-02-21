@@ -17,9 +17,6 @@
             <column name="status" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            <column name="coupon" type="varchar(255)">
-                <constraints nullable="true" />
-            </column>
             <column name="receive" type="${datetimeType}">
                 <constraints nullable="true" />
             </column>
@@ -52,7 +49,6 @@
                   usePreparedStatements="true">
             <column name="id" type="numeric"/>
             <column name="status" type="string"/>
-            <column name="coupon" type="string"/>
             <column name="receive" type="date"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>

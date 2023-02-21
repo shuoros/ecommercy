@@ -124,9 +124,6 @@ public class OrderResource {
                 if (order.getStatus() != null) {
                     existingOrder.setStatus(order.getStatus());
                 }
-                if (order.getCoupon() != null) {
-                    existingOrder.setCoupon(order.getCoupon());
-                }
                 if (order.getReceive() != null) {
                     existingOrder.setReceive(order.getReceive());
                 }

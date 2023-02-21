@@ -38,9 +38,6 @@ class OrderResourceIT {
     private static final OrderStatus DEFAULT_STATUS = OrderStatus.NEW;
     private static final OrderStatus UPDATED_STATUS = OrderStatus.PROCESSING;
 
-    private static final String DEFAULT_COUPON = "AAAAAAAAAA";
-    private static final String UPDATED_COUPON = "BBBBBBBBBB";
-
     private static final ZonedDateTime DEFAULT_RECEIVE = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
     private static final ZonedDateTime UPDATED_RECEIVE = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
 
@@ -68,7 +65,7 @@ class OrderResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Order createEntity(EntityManager em) {
-        Order order = new Order().status(DEFAULT_STATUS).coupon(DEFAULT_COUPON).receive(DEFAULT_RECEIVE);
+        Order order = new Order().status(DEFAULT_STATUS).receive(DEFAULT_RECEIVE);
         return order;
     }
 
@@ -79,7 +76,7 @@ class OrderResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Order createUpdatedEntity(EntityManager em) {
-        Order order = new Order().status(UPDATED_STATUS).coupon(UPDATED_COUPON).receive(UPDATED_RECEIVE);
+        Order order = new Order().status(UPDATED_STATUS).receive(UPDATED_RECEIVE);
         return order;
     }
 
@@ -102,7 +99,6 @@ class OrderResourceIT {
         assertThat(orderList).hasSize(databaseSizeBeforeCreate + 1);
         Order testOrder = orderList.get(orderList.size() - 1);
         assertThat(testOrder.getStatus()).isEqualTo(DEFAULT_STATUS);
-        assertThat(testOrder.getCoupon()).isEqualTo(DEFAULT_COUPON);
         assertThat(testOrder.getReceive()).isEqualTo(DEFAULT_RECEIVE);
     }
 
@@ -137,7 +133,6 @@ class OrderResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(order.getId().intValue())))
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
-            .andExpect(jsonPath("$.[*].coupon").value(hasItem(DEFAULT_COUPON)))
             .andExpect(jsonPath("$.[*].receive").value(hasItem(sameInstant(DEFAULT_RECEIVE))));
     }
 
@@ -154,7 +149,6 @@ class OrderResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(order.getId().intValue()))
             .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()))
-            .andExpect(jsonPath("$.coupon").value(DEFAULT_COUPON))
             .andExpect(jsonPath("$.receive").value(sameInstant(DEFAULT_RECEIVE)));
     }
 
@@ -177,7 +171,7 @@ class OrderResourceIT {
         Order updatedOrder = orderRepository.findById(order.getId()).get();
         // Disconnect from session so that the updates on updatedOrder are not directly saved in db
         em.detach(updatedOrder);
-        updatedOrder.status(UPDATED_STATUS).coupon(UPDATED_COUPON).receive(UPDATED_RECEIVE);
+        updatedOrder.status(UPDATED_STATUS).receive(UPDATED_RECEIVE);
 
         restOrderMockMvc
             .perform(
@@ -192,7 +186,6 @@ class OrderResourceIT {
         assertThat(orderList).hasSize(databaseSizeBeforeUpdate);
         Order testOrder = orderList.get(orderList.size() - 1);
         assertThat(testOrder.getStatus()).isEqualTo(UPDATED_STATUS);
-        assertThat(testOrder.getCoupon()).isEqualTo(UPDATED_COUPON);
         assertThat(testOrder.getReceive()).isEqualTo(UPDATED_RECEIVE);
     }
 
@@ -264,6 +257,36 @@ class OrderResourceIT {
         Order partialUpdatedOrder = new Order();
         partialUpdatedOrder.setId(order.getId());
 
+        partialUpdatedOrder.status(UPDATED_STATUS);
+
+        restOrderMockMvc
+            .perform(
+                patch(ENTITY_API_URL_ID, partialUpdatedOrder.getId())
+                    .contentType("application/merge-patch+json")
+                    .content(TestUtil.convertObjectToJsonBytes(partialUpdatedOrder))
+            )
+            .andExpect(status().isOk());
+
+        // Validate the Order in the database
+        List<Order> orderList = orderRepository.findAll();
+        assertThat(orderList).hasSize(databaseSizeBeforeUpdate);
+        Order testOrder = orderList.get(orderList.size() - 1);
+        assertThat(testOrder.getStatus()).isEqualTo(UPDATED_STATUS);
+        assertThat(testOrder.getReceive()).isEqualTo(DEFAULT_RECEIVE);
+    }
+
+    @Test
+    @Transactional
+    void fullUpdateOrderWithPatch() throws Exception {
+        // Initialize the database
+        orderRepository.saveAndFlush(order);
+
+        int databaseSizeBeforeUpdate = orderRepository.findAll().size();
+
+        // Update the order using partial update
+        Order partialUpdatedOrder = new Order();
+        partialUpdatedOrder.setId(order.getId());
+
         partialUpdatedOrder.status(UPDATED_STATUS).receive(UPDATED_RECEIVE);
 
         restOrderMockMvc
@@ -279,38 +302,6 @@ class OrderResourceIT {
         assertThat(orderList).hasSize(databaseSizeBeforeUpdate);
         Order testOrder = orderList.get(orderList.size() - 1);
         assertThat(testOrder.getStatus()).isEqualTo(UPDATED_STATUS);
-        assertThat(testOrder.getCoupon()).isEqualTo(DEFAULT_COUPON);
-        assertThat(testOrder.getReceive()).isEqualTo(UPDATED_RECEIVE);
-    }
-
-    @Test
-    @Transactional
-    void fullUpdateOrderWithPatch() throws Exception {
-        // Initialize the database
-        orderRepository.saveAndFlush(order);
-
-        int databaseSizeBeforeUpdate = orderRepository.findAll().size();
-
-        // Update the order using partial update
-        Order partialUpdatedOrder = new Order();
-        partialUpdatedOrder.setId(order.getId());
-
-        partialUpdatedOrder.status(UPDATED_STATUS).coupon(UPDATED_COUPON).receive(UPDATED_RECEIVE);
-
-        restOrderMockMvc
-            .perform(
-                patch(ENTITY_API_URL_ID, partialUpdatedOrder.getId())
-                    .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(partialUpdatedOrder))
-            )
-            .andExpect(status().isOk());
-
-        // Validate the Order in the database
-        List<Order> orderList = orderRepository.findAll();
-        assertThat(orderList).hasSize(databaseSizeBeforeUpdate);
-        Order testOrder = orderList.get(orderList.size() - 1);
-        assertThat(testOrder.getStatus()).isEqualTo(UPDATED_STATUS);
-        assertThat(testOrder.getCoupon()).isEqualTo(UPDATED_COUPON);
         assertThat(testOrder.getReceive()).isEqualTo(UPDATED_RECEIVE);
     }
 

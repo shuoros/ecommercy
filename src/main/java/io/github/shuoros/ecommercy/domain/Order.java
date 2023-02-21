@@ -24,9 +24,6 @@ public class Order implements Serializable {
     @Column(name = "status")
     private OrderStatus status;
 
-    @Column(name = "coupon")
-    private String coupon;
-
     @Column(name = "receive")
     private ZonedDateTime receive;
 
@@ -69,19 +66,6 @@ public class Order implements Serializable {
 
     public void setStatus(OrderStatus status) {
         this.status = status;
-    }
-
-    public String getCoupon() {
-        return this.coupon;
-    }
-
-    public Order coupon(String coupon) {
-        this.setCoupon(coupon);
-        return this;
-    }
-
-    public void setCoupon(String coupon) {
-        this.coupon = coupon;
     }
 
     public ZonedDateTime getReceive() {
@@ -167,7 +151,6 @@ public class Order implements Serializable {
         return "Order{" +
             "id=" + getId() +
             ", status='" + getStatus() + "'" +
-            ", coupon='" + getCoupon() + "'" +
             ", receive='" + getReceive() + "'" +
             "}";
     }
