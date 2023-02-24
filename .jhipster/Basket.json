@@ -1,6 +1,6 @@
 {
   "applications": "*",
-  "changelogDate": "20230220085324",
+  "changelogDate": "20230224120848",
   "dto": "no",
   "embedded": false,
   "entityTableName": "basket",

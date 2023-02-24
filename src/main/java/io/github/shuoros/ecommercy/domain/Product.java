@@ -5,12 +5,15 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * A Product.
  */
 @Entity
 @Table(name = "product")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Product implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -43,10 +46,12 @@ public class Product implements Serializable {
     private ProductMainAttribute productMainAttribute;
 
     @OneToMany(mappedBy = "product")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "product", "customer" }, allowSetters = true)
     private Set<Comment> comments = new HashSet<>();
 
     @OneToMany(mappedBy = "product")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "product" }, allowSetters = true)
     private Set<Picture> pictures = new HashSet<>();
 
@@ -56,14 +61,17 @@ public class Product implements Serializable {
         joinColumns = @JoinColumn(name = "product_id"),
         inverseJoinColumns = @JoinColumn(name = "attribute_id")
     )
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "productMainAttribute", "products" }, allowSetters = true)
     private Set<Attribute> attributes = new HashSet<>();
 
     @OneToMany(mappedBy = "product")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "product", "basket" }, allowSetters = true)
     private Set<Item> items = new HashSet<>();
 
     @ManyToMany(mappedBy = "products")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "products", "group" }, allowSetters = true)
     private Set<Category> categories = new HashSet<>();
 

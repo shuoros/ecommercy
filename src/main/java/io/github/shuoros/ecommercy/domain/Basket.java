@@ -6,12 +6,15 @@ import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * A Basket.
  */
 @Entity
 @Table(name = "basket")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Basket implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -33,6 +36,7 @@ public class Basket implements Serializable {
     private Order order;
 
     @OneToMany(mappedBy = "basket")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "product", "basket" }, allowSetters = true)
     private Set<Item> items = new HashSet<>();
 

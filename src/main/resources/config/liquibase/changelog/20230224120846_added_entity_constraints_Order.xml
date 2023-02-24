@@ -6,7 +6,7 @@
     <!--
         Added the constraints for entity Order.
     -->
-    <changeSet id="20230220085322-2" author="jhipster">
+    <changeSet id="20230224120846-2" author="jhipster">
 
         <addForeignKeyConstraint baseColumnNames="address_id"
                                  baseTableName="jhi_order"

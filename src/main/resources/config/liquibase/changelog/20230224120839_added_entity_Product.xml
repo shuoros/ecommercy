@@ -7,18 +7,47 @@
                         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
     <!--
-        Added the entity Country.
+        Added the entity Product.
     -->
-    <changeSet id="20230220085330-1" author="jhipster">
-        <createTable tableName="country">
+    <changeSet id="20230224120839-1" author="jhipster">
+        <createTable tableName="product">
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="name" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
+            <column name="brand" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="rate" type="integer">
+                <constraints nullable="true" />
+            </column>
+            <column name="description" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="main_pic_id" type="bigint">
+                <constraints nullable="true" unique="true" uniqueConstraintName="ux_product__main_pic_id" />
+            </column>
+            <column name="product_main_attribute_id" type="bigint">
+                <constraints nullable="true" unique="true" uniqueConstraintName="ux_product__product_main_attribute_id" />
+            </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
+    </changeSet>
+
+    <changeSet id="20230224120839-1-relations" author="jhipster">
+
+        <createTable tableName="rel_product__attribute">
+            <column name="attribute_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="product_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="product_id, attribute_id" tableName="rel_product__attribute"/>
     </changeSet>
 
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
@@ -31,14 +60,17 @@
           This can be customized by adding or removing 'faker' in the 'spring.liquibase.contexts'
           Spring Boot configuration key.
     -->
-    <changeSet id="20230220085330-1-data" author="jhipster" context="faker">
+    <changeSet id="20230224120839-1-data" author="jhipster" context="faker">
         <loadData
-                  file="config/liquibase/fake-data/country.csv"
+                  file="config/liquibase/fake-data/product.csv"
                   separator=";"
-                  tableName="country"
+                  tableName="product"
                   usePreparedStatements="true">
             <column name="id" type="numeric"/>
             <column name="name" type="string"/>
+            <column name="brand" type="string"/>
+            <column name="rate" type="numeric"/>
+            <column name="description" type="string"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

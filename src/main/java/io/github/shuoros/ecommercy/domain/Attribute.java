@@ -5,12 +5,15 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * A Attribute.
  */
 @Entity
 @Table(name = "attribute")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Attribute implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -31,6 +34,7 @@ public class Attribute implements Serializable {
     private ProductMainAttribute productMainAttribute;
 
     @ManyToMany(mappedBy = "attributes")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(
         value = { "mainPic", "productMainAttribute", "comments", "pictures", "attributes", "items", "categories" },
         allowSetters = true

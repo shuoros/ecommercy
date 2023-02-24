@@ -1,5 +1,5 @@
 <template>
-  <b-navbar data-cy="navbar" toggleable="md" type="dark" class="bg-dark">
+  <b-navbar data-cy="navbar" toggleable="md" type="dark" class="bg-primary">
     <b-navbar-brand class="logo" b-link to="/">
       <span class="logo-img"></span>
       <span v-text="$t('global.title')" class="navbar-title">Ecommercy</span> <span class="navbar-version">{{ version }}</span>

@@ -5,12 +5,15 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * A Category.
  */
 @Entity
 @Table(name = "category")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Category implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -29,6 +32,7 @@ public class Category implements Serializable {
         joinColumns = @JoinColumn(name = "category_id"),
         inverseJoinColumns = @JoinColumn(name = "product_id")
     )
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(
         value = { "mainPic", "productMainAttribute", "comments", "pictures", "attributes", "items", "categories" },
         allowSetters = true

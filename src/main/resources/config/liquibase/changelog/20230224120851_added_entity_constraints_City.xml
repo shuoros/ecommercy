@@ -4,14 +4,14 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
     <!--
-        Added the constraints for entity ProductMainAttribute.
+        Added the constraints for entity City.
     -->
-    <changeSet id="20230220085320-2" author="jhipster">
+    <changeSet id="20230224120851-2" author="jhipster">
 
-        <addForeignKeyConstraint baseColumnNames="attribute_id"
-                                 baseTableName="product_main_attribute"
-                                 constraintName="fk_product_main_attribute__attribute_id"
+        <addForeignKeyConstraint baseColumnNames="state_id"
+                                 baseTableName="city"
+                                 constraintName="fk_city__state_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="attribute"/>
+                                 referencedTableName="state"/>
     </changeSet>
 </databaseChangeLog>

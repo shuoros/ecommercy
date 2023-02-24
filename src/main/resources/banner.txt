@@ -1,9 +1,10 @@
-___________
-\_   _____/ ____  ____   _____   _____   ___________   ____ ___.__.
- |    __)__/ ___\/  _ \ /     \ /     \_/ __ \_  __ \_/ ___<   |  |
- |        \  \__(  <_> )  Y Y  \  Y Y  \  ___/|  | \/\  \___\___  |
-/_______  /\___  >____/|__|_|  /__|_|  /\___  >__|    \___  > ____|
-        \/     \/            \/      \/     \/            \/\/
 
-${AnsiColor.ORANGE}:: By Soroush Shemshadi 🤓👨‍💻  :: Running Spring Boot ${spring-boot.version} ::
-:: https://github.com/shuoros ::${AnsiColor.DEFAULT}
+ ${AnsiColor.GREEN}      ██╗${AnsiColor.BLUE} ██╗   ██╗ ████████╗ ███████╗   ██████╗ ████████╗ ████████╗ ████${AnsiColor.GREEN}███╗
+ ${AnsiColor.GREEN}      ██║ ██║ ${AnsiColor.BLUE}  ██║ ╚══██╔══╝ ██╔═══██╗ ██╔════╝ ╚══██╔══╝ ██╔══${AnsiColor.GREEN}═══╝ ██╔═══██╗
+ ${AnsiColor.GREEN}      ██║ ████████║${AnsiColor.BLUE}    ██║    ███████╔╝ ╚█████╗     ██║   ${AnsiColor.GREEN} ██████╗   ███████╔╝
+ ${AnsiColor.GREEN}██╗   ██║ ██╔═══██║    ██║   ${AnsiColor.BLUE} ██╔════╝   ╚═══██╗    ${AnsiColor.GREEN}██║    ██╔═══╝   ██╔══██║
+ ${AnsiColor.GREEN}╚██████╔╝ ██║   ██║ ████████╗ ██║ ${AnsiColor.BLUE}      ██████${AnsiColor.GREEN}╔╝    ██║    ████████╗ ██║  ╚██╗
+ ${AnsiColor.GREEN} ╚═════╝  ╚═╝   ╚═╝ ╚═══════╝ ╚═╝      ${AnsiColor.BLUE} ╚═${AnsiColor.GREEN}════╝     ╚═╝    ╚═══════╝ ╚═╝   ╚═╝
+
+${AnsiColor.BRIGHT_BLUE}:: JHipster 🤓  :: Running Spring Boot ${spring-boot.version} ::
+:: https://www.jhipster.tech ::${AnsiColor.DEFAULT}

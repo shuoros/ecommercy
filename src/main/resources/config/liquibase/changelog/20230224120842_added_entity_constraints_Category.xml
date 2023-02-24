@@ -6,7 +6,7 @@
     <!--
         Added the constraints for entity Category.
     -->
-    <changeSet id="20230220085318-2" author="jhipster">
+    <changeSet id="20230224120842-2" author="jhipster">
 
         <addForeignKeyConstraint baseColumnNames="category_id"
                                  baseTableName="rel_category__product"

@@ -7,18 +7,15 @@
                         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
     <!--
-        Added the entity Customer.
+        Added the entity Group.
     -->
-    <changeSet id="20230220085325-1" author="jhipster">
-        <createTable tableName="customer">
+    <changeSet id="20230224120841-1" author="jhipster">
+        <createTable tableName="jhi_group">
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="score" type="integer">
+            <column name="name" type="varchar(255)">
                 <constraints nullable="true" />
-            </column>
-            <column name="user_id" type="bigint">
-                <constraints nullable="true" unique="true" uniqueConstraintName="ux_customer__user_id" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
@@ -34,14 +31,14 @@
           This can be customized by adding or removing 'faker' in the 'spring.liquibase.contexts'
           Spring Boot configuration key.
     -->
-    <changeSet id="20230220085325-1-data" author="jhipster" context="faker">
+    <changeSet id="20230224120841-1-data" author="jhipster" context="faker">
         <loadData
-                  file="config/liquibase/fake-data/customer.csv"
+                  file="config/liquibase/fake-data/jhi_group.csv"
                   separator=";"
-                  tableName="customer"
+                  tableName="jhi_group"
                   usePreparedStatements="true">
             <column name="id" type="numeric"/>
-            <column name="score" type="numeric"/>
+            <column name="name" type="string"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

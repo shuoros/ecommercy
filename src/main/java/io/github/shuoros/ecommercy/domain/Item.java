@@ -4,12 +4,15 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import javax.persistence.*;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * A Item.
  */
 @Entity
 @Table(name = "item")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Item implements Serializable {
 
     private static final long serialVersionUID = 1L;

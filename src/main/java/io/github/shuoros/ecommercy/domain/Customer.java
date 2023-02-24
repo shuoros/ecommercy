@@ -5,12 +5,15 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * A Customer.
  */
 @Entity
 @Table(name = "customer")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Customer implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -28,18 +31,22 @@ public class Customer implements Serializable {
     private User user;
 
     @OneToMany(mappedBy = "customer")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "order", "items", "customer" }, allowSetters = true)
     private Set<Basket> baskets = new HashSet<>();
 
     @OneToMany(mappedBy = "customer")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "product", "customer" }, allowSetters = true)
     private Set<Comment> comments = new HashSet<>();
 
     @OneToMany(mappedBy = "customer")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "order", "customer" }, allowSetters = true)
     private Set<Address> addresses = new HashSet<>();
 
     @ManyToMany(mappedBy = "customers")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "customers", "orders" }, allowSetters = true)
     private Set<Coupon> coupons = new HashSet<>();
 

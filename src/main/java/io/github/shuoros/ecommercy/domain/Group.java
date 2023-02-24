@@ -5,12 +5,15 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * A Group.
  */
 @Entity
 @Table(name = "jhi_group")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Group implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -24,6 +27,7 @@ public class Group implements Serializable {
     private String name;
 
     @OneToMany(mappedBy = "group")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "products", "group" }, allowSetters = true)
     private Set<Category> categories = new HashSet<>();
 

@@ -5,12 +5,15 @@ import io.github.shuoros.ecommercy.domain.enumeration.OrderStatus;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import javax.persistence.*;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * A Order.
  */
 @Entity
 @Table(name = "jhi_order")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Order implements Serializable {
 
     private static final long serialVersionUID = 1L;

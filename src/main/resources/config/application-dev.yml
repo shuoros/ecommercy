@@ -33,8 +33,8 @@ spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     url: jdbc:mysql://localhost:3306/Ecommercy?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&createDatabaseIfNotExist=true
-    username:
-    password:
+    username: shuoros
+    password: password
     hikari:
       poolName: Hikari
       auto-commit: false
@@ -46,7 +46,7 @@ spring:
   jpa:
   liquibase:
     # Remove 'faker' if you do not want the sample data to be loaded automatically
-    contexts: dev, faker
+    contexts: dev
   mail:
     host: localhost
     port: 25
@@ -100,7 +100,7 @@ jhipster:
     authentication:
       jwt:
         # This token must be encoded using Base64 and be at least 256 bits long (you can type `openssl rand -base64 64` on your command line to generate a 512 bits one)
-        base64-secret: OTEwNDE4YTAyZDY0MGY5YWMxZGNjZTdjMTYzMzBmNTQwMjM2MDI3ZDJjOWYxZGQ2ZmQ1NTc0NTI2NzlmYWRiMDY2NzRjOGVmMzFmOWMxNDM0MjcyNTkyNmMwYTM2OTYwZmY4YWYwMjUyODQ4YTg4NDFmMDk3NDhiMGRjYzE0ZTQ=
+        base64-secret: NGFkNmVjMGVmNzJiZGVlZDI1NTU4NzI5MjcwMzczOThhODdjNTQyNmVjYTFhNjQ3NzdjMTdhYTI1ODg4MDEzMGFkNWE2MzY5M2MxNjkxZDg2ZTk3NWFlMGRkOWQ5ZDhmZDMyNjM5MDIzNWUwYmJmNzJjM2VkNmRhZDMxOTBkNzM=
         # Token is valid 24 hours
         token-validity-in-seconds: 86400
         token-validity-in-seconds-for-remember-me: 2592000

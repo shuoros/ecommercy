@@ -1,6 +1,6 @@
 {
   "applications": "*",
-  "changelogDate": "20230220085322",
+  "changelogDate": "20230224120846",
   "dto": "no",
   "embedded": false,
   "entityTableName": "jhi_order",

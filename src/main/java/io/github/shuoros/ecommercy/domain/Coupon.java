@@ -7,12 +7,15 @@ import java.time.ZonedDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * A Coupon.
  */
 @Entity
 @Table(name = "coupon")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Coupon implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -38,10 +41,12 @@ public class Coupon implements Serializable {
         joinColumns = @JoinColumn(name = "coupon_id"),
         inverseJoinColumns = @JoinColumn(name = "customer_id")
     )
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "user", "baskets", "comments", "addresses", "coupons" }, allowSetters = true)
     private Set<Customer> customers = new HashSet<>();
 
     @OneToMany(mappedBy = "coupon")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "address", "coupon", "basket" }, allowSetters = true)
     private Set<Order> orders = new HashSet<>();
 
