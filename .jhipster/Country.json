@@ -1,0 +1,27 @@
+{
+  "applications": "*",
+  "changelogDate": "20230224120854",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "country",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Country",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "state",
+      "otherEntityRelationshipName": "country",
+      "relationshipName": "state",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "no"
+}

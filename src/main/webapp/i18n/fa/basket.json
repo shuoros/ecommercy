@@ -1,0 +1,28 @@
+{
+  "ecommercyApp": {
+    "basket": {
+      "home": {
+        "title": "Baskets",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Basket",
+        "createOrEditLabel": "Create or edit a Basket",
+        "notFound": "No Baskets found"
+      },
+      "created": "A new Basket is created with identifier {{ param }}",
+      "updated": "A Basket is updated with identifier {{ param }}",
+      "deleted": "A Basket is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Basket {{ id }}?"
+      },
+      "detail": {
+        "title": "Basket"
+      },
+      "id": "ID",
+      "score": "Score",
+      "price": "Price",
+      "order": "Order",
+      "item": "Item",
+      "customer": "Customer"
+    }
+  }
+}

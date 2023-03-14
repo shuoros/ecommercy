@@ -1,0 +1,33 @@
+{
+  "applications": "*",
+  "changelogDate": "20230224120852",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "state",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "State",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "city",
+      "otherEntityRelationshipName": "state",
+      "relationshipName": "city",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "country",
+      "otherEntityRelationshipName": "state",
+      "relationshipName": "country",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "no"
+}

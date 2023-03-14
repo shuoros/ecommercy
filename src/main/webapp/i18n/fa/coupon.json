@@ -1,0 +1,28 @@
+{
+  "ecommercyApp": {
+    "coupon": {
+      "home": {
+        "title": "Coupons",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Coupon",
+        "createOrEditLabel": "Create or edit a Coupon",
+        "notFound": "No Coupons found"
+      },
+      "created": "A new Coupon is created with identifier {{ param }}",
+      "updated": "A Coupon is updated with identifier {{ param }}",
+      "deleted": "A Coupon is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Coupon {{ id }}?"
+      },
+      "detail": {
+        "title": "Coupon"
+      },
+      "id": "ID",
+      "code": "Code",
+      "type": "Type",
+      "expiration": "Expiration",
+      "customer": "Customer",
+      "order": "Order"
+    }
+  }
+}

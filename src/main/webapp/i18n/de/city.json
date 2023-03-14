@@ -1,0 +1,25 @@
+{
+  "ecommercyApp": {
+    "city": {
+      "home": {
+        "title": "Cities",
+        "refreshListLabel": "Liste aktualisieren",
+        "createLabel": "City erstellen",
+        "createOrEditLabel": "City erstellen oder bearbeiten",
+        "notFound": "Keine Cities gefunden"
+      },
+      "created": "City erstellt mit ID {{ param }}",
+      "updated": "City aktualisiert mit ID {{ param }}",
+      "deleted": "City gelöscht mit ID {{ param }}",
+      "delete": {
+        "question": "Soll City {{ id }} wirklich dauerhaft gelöscht werden?"
+      },
+      "detail": {
+        "title": "City"
+      },
+      "id": "ID",
+      "name": "Name",
+      "state": "State"
+    }
+  }
+}

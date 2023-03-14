@@ -1,0 +1,25 @@
+{
+  "ecommercyApp": {
+    "picture": {
+      "home": {
+        "title": "Pictures",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Picture",
+        "createOrEditLabel": "Create or edit a Picture",
+        "notFound": "No Pictures found"
+      },
+      "created": "A new Picture is created with identifier {{ param }}",
+      "updated": "A Picture is updated with identifier {{ param }}",
+      "deleted": "A Picture is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Picture {{ id }}?"
+      },
+      "detail": {
+        "title": "Picture"
+      },
+      "id": "ID",
+      "path": "Path",
+      "product": "Product"
+    }
+  }
+}

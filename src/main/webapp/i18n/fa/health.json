@@ -1,0 +1,31 @@
+{
+  "health": {
+    "title": "چک سلامتی",
+    "refresh.button": "تازه کردن",
+    "stacktrace": "وقایع برای عیب یابی",
+    "details": {
+      "details": "جزییات",
+      "properties": "خواص",
+      "name": "نام",
+      "value": "مقدار",
+      "error": "خطا"
+    },
+    "indicator": {
+      "diskSpace": "Disk space",
+      "mail": "Email",
+      "livenessState": "Liveness state",
+      "readinessState": "Readiness state",
+      "ping": "Application",
+      "db": "پایگاه داده"
+    },
+    "table": {
+      "service": "نام سرویس",
+      "status": "وضعیت"
+    },
+    "status": {
+      "UNKNOWN": "UNKNOWN",
+      "UP": "UP",
+      "DOWN": "DOWN"
+    }
+  }
+}

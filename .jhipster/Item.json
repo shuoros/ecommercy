@@ -1,0 +1,37 @@
+{
+  "applications": "*",
+  "changelogDate": "20230224120845",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "item",
+  "fields": [
+    {
+      "fieldName": "quantity",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "price",
+      "fieldType": "BigDecimal"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Item",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "product",
+      "otherEntityRelationshipName": "item",
+      "relationshipName": "product",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "basket",
+      "otherEntityRelationshipName": "item",
+      "relationshipName": "basket",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "no"
+}

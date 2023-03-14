@@ -1,0 +1,78 @@
+{
+  "applications": "*",
+  "changelogDate": "20230224120839",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "product",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "brand",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "rate",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Product",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "picture",
+      "ownerSide": true,
+      "relationshipName": "mainPic",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityName": "productMainAttribute",
+      "otherEntityRelationshipName": "product",
+      "ownerSide": true,
+      "relationshipName": "productMainAttribute",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityName": "comment",
+      "otherEntityRelationshipName": "product",
+      "relationshipName": "comment",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "picture",
+      "otherEntityRelationshipName": "product",
+      "relationshipName": "picture",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "attribute",
+      "otherEntityRelationshipName": "product",
+      "ownerSide": true,
+      "relationshipName": "attribute",
+      "relationshipType": "many-to-many"
+    },
+    {
+      "otherEntityName": "item",
+      "otherEntityRelationshipName": "product",
+      "relationshipName": "item",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "category",
+      "otherEntityRelationshipName": "product",
+      "ownerSide": false,
+      "relationshipName": "category",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "service": "no"
+}
