@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="20230729143435_1" author="soroush">
+        <createTable tableName="product">
+            <column name="id" type="${uuidType}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(60)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="varchar(255)"/>
+            <column name="price" type="decimal(21,2)"/>
+        </createTable>
+        <loadData
+                file="config/liquibase/data/product.csv"
+                separator=";"
+                tableName="product"
+                usePreparedStatements="true">
+            <column name="id" type="${uuidType}"/>
+            <column name="name" type="string"/>
+            <column name="description" type="string"/>
+            <column name="price" type="numeric"/>
+        </loadData>
+    </changeSet>
+</databaseChangeLog>
