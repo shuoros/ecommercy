@@ -1,0 +1,27 @@
+server:
+  port: 8080
+  compression:
+    enabled: true
+spring:
+  application:
+    name: Ecommercy
+  jackson:
+    serialization:
+      indent-output: true
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:postgresql://localhost:5432/ecommercy
+    username: postgres
+    password: postgres
+    hikari:
+      poolName: Hikari
+      auto-commit: false
+  jpa:
+    hibernate:
+      ddl-auto: none
+  liquibase:
+    enabled: true
+    change-log: classpath:db/master.xml
+ecommercy:
+  security:
+    secret-key: SKSmSMg8N+ZqHCDAolHRDbNib51fwQPDEuZHZ9Mpy0i2UEFQqLrpcD7YbCrLJXZ9fo3osfoUoQ7rJEToJihopQ==
