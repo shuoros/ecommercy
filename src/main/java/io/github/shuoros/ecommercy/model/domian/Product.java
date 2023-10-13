@@ -1,4 +1,4 @@
-package io.github.shuoros.ecommercy.domian;
+package io.github.shuoros.ecommercy.model.domian;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

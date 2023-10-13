@@ -1,6 +1,6 @@
 package io.github.shuoros.ecommercy.repository;
 
-import io.github.shuoros.ecommercy.domian.Product;
+import io.github.shuoros.ecommercy.model.domian.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

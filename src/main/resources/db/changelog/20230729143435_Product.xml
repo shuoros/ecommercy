@@ -18,7 +18,7 @@
             <column name="price" type="decimal(21,2)"/>
         </createTable>
         <loadData
-                file="config/liquibase/data/product.csv"
+                file="db/data/product.csv"
                 separator=";"
                 tableName="product"
                 usePreparedStatements="true">

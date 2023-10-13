@@ -10,5 +10,6 @@
     <property name="uuidType" value="uuid" dbms="postgresql"/>
     <property name="datetimeType" value="datetime" dbms="postgresql"/>
 
-    <include file="config/liquibase/changelog/20230729143435_product_schema.xml" relativeToChangelogFile="false"/>
+    <include file="db/changelog/20230729143435_Product.xml" relativeToChangelogFile="false"/>
+    <include file="db/changelog/20231013205906_Customer.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>

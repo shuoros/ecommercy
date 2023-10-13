@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="20231013205906_1" author="soroush">
+        <createTable tableName="customer">
+            <column name="id" type="${uuidType}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="username" type="varchar(50)">
+                <constraints unique="true" nullable="false" uniqueConstraintName="ux_customer__username"/>
+            </column>
+            <column name="email" type="varchar(191)">
+                <constraints unique="true" nullable="true" uniqueConstraintName="ux_customer__email"/>
+            </column>
+            <column name="password_hash" type="varchar(60)"/>
+            <column name="activated" type="boolean" valueBoolean="false">
+                <constraints nullable="false" />
+            </column>
+            <column name="roles" type="json"/>
+        </createTable>
+        <loadData
+                file="db/data/customer.csv"
+                separator=";"
+                tableName="customer"
+                usePreparedStatements="true">
+            <column name="id" type="${uuidType}"/>
+            <column name="username" type="string"/>
+            <column name="email" type="string"/>
+            <column name="password_hash" type="string"/>
+            <column name="activated" type="boolean"/>
+            <column name="roles" type="other"/>
+        </loadData>
+    </changeSet>
+</databaseChangeLog>
