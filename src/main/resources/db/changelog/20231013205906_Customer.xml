@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <databaseChangeLog
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
-                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
     <changeSet id="20231013205906_1" author="soroush">
         <createTable tableName="customer">
@@ -18,10 +16,22 @@
                 <constraints unique="true" nullable="true" uniqueConstraintName="ux_customer__email"/>
             </column>
             <column name="password_hash" type="varchar(60)"/>
-            <column name="activated" type="boolean" valueBoolean="false">
-                <constraints nullable="false" />
+            <column name="first_name" type="varchar(50)"/>
+            <column name="last_name" type="varchar(50)"/>
+            <column name="language" type="varchar(10)">
+                <constraints nullable="false"/>
             </column>
+            <column name="activated" type="boolean" valueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="activation_key" type="varchar(20)"/>
             <column name="roles" type="json"/>
+            <column name="created_by" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="timestamp"/>
+            <column name="last_modified_by" type="varchar(50)"/>
+            <column name="last_modified_date" type="timestamp"/>
         </createTable>
         <loadData
                 file="db/data/customer.csv"
@@ -32,6 +42,9 @@
             <column name="username" type="string"/>
             <column name="email" type="string"/>
             <column name="password_hash" type="string"/>
+            <column name="first_name" type="string"/>
+            <column name="last_name" type="string"/>
+            <column name="language" type="string"/>
             <column name="activated" type="boolean"/>
             <column name="roles" type="other"/>
         </loadData>
