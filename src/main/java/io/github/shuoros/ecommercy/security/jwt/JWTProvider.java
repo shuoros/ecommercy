@@ -42,8 +42,8 @@ public class JWTProvider implements Serializable {
         final byte[] secretKeyByteArray = extractSecretKeyByteArray(securityConfiguration);
         secretKey = Keys.hmacShaKeyFor(secretKeyByteArray);
         jwtParser = Jwts.parser().verifyWith(secretKey).build();
-        simpleTokenValidity = securityConfiguration.getSimpleTokenValidity();
-        rememberMeTokenValidity = securityConfiguration.getRememberMeTokenValidity();
+        simpleTokenValidity = 1000 * securityConfiguration.getSimpleTokenValidity();
+        rememberMeTokenValidity = 1000 * securityConfiguration.getRememberMeTokenValidity();
     }
 
     private static byte[] extractSecretKeyByteArray(ApplicationConfiguration.Security securityConfiguration) {

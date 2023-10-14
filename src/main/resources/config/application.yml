@@ -25,3 +25,5 @@ spring:
 ecommercy:
   security:
     secret-key: SKSmSMg8N+ZqHCDAolHRDbNib51fwQPDEuZHZ9Mpy0i2UEFQqLrpcD7YbCrLJXZ9fo3osfoUoQ7rJEToJihopQ==
+    simple-token-validity: 1800
+    remember-me-token-validity: 2592000
