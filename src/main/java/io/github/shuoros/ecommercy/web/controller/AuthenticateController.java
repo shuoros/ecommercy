@@ -1,5 +1,7 @@
 package io.github.shuoros.ecommercy.web.controller;
 
+import io.github.shuoros.ecommercy.exception.ActivationCodeIsWrongException;
+import io.github.shuoros.ecommercy.model.domian.Customer;
 import io.github.shuoros.ecommercy.model.model.JWT;
 import io.github.shuoros.ecommercy.model.vm.LoginVM;
 import io.github.shuoros.ecommercy.model.vm.RegisterVM;
@@ -16,6 +18,9 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api")
@@ -56,5 +61,16 @@ public class AuthenticateController {
         log.debug("request to register new customer: {}", registerVM);
 
         customerService.register(registerVM);
+    }
+
+    @GetMapping("/activate/{key}")
+    public void activateAccount(@PathVariable(value = "key") UUID key) {
+        log.debug("request to activate customer for activation key {}", key);
+
+        final Optional<Customer> customer = customerService.activateRegistration(key);
+
+        if (customer.isEmpty()) {
+            throw new ActivationCodeIsWrongException();
+        }
     }
 }

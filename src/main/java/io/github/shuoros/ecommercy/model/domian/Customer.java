@@ -2,6 +2,7 @@ package io.github.shuoros.ecommercy.model.domian;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.vladmihalcea.hibernate.type.json.JsonType;
+import io.github.shuoros.ecommercy.config.Constants;
 import io.github.shuoros.ecommercy.model.enumeration.Language;
 import io.github.shuoros.ecommercy.model.enumeration.Role;
 import jakarta.persistence.*;
@@ -34,7 +35,7 @@ public class Customer extends AbstractTimestampedDomain implements Serializable 
     private UUID id;
 
     @NotNull
-    @Pattern(regexp = "^(?>[a-zA-Z0-9!$&*+=?^_`{|}~.-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*)|(?>[_.@A-Za-z0-9-]+)$")
+    @Pattern(regexp = Constants.USERNAME_REGEX)
     @Size(min = 1, max = 50)
     @Column(length = 50, unique = true, nullable = false)
     private String username;
@@ -66,10 +67,10 @@ public class Customer extends AbstractTimestampedDomain implements Serializable 
     @Column(nullable = false)
     private boolean activated = false;
 
-    @Size(max = 8)
-    @Column(name = "activation_key", length = 8)
+    @Size(max = 36)
+    @Column(name = "activation_key", length = 36)
     @JsonIgnore
-    private String activationKey;
+    private UUID activationKey;
 
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(name = "roles", columnDefinition = "json")
