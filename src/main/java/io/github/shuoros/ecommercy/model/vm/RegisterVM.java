@@ -1,5 +1,9 @@
 package io.github.shuoros.ecommercy.model.vm;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import io.github.shuoros.ecommercy.config.Constants;
+import io.github.shuoros.ecommercy.model.enumeration.Language;
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -12,7 +16,7 @@ import lombok.NoArgsConstructor;
 public class RegisterVM {
 
     @NotNull
-    @Pattern(regexp = "^(?>[a-zA-Z0-9!$&*+=?^_`{|}~.-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*)|(?>[_.@A-Za-z0-9-]+)$")
+    @Pattern(regexp = Constants.USERNAME_REGEX)
     @Size(min = 1, max = 50)
     private String username;
 
@@ -23,4 +27,14 @@ public class RegisterVM {
     @NotNull
     @Size(min = 6, max = 100)
     private String password;
+
+    @Size(max = 50)
+    @JsonProperty("first_name")
+    private String firstName;
+
+    @Size(max = 50)
+    @JsonProperty("last_name")
+    private String lastName;
+
+    private Language language;
 }

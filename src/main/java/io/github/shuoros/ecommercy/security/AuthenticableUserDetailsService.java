@@ -17,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component("userDetailsService")
@@ -41,7 +40,7 @@ public class AuthenticableUserDetailsService implements UserDetailsService {
     }
 
     private UserDetails loadUserDetailsByEmail(String username) {
-        return customerRepository.findByEmailIgnoreCase(username)
+        return customerRepository.findOneByEmailIgnoreCase(username)
                 .map(user -> buildUserDetails(user, username))
                 .orElseThrow(() ->
                         new UsernameNotFoundException(String.format(USER_NOT_FOUND_EXCEPTION, username))
@@ -49,7 +48,7 @@ public class AuthenticableUserDetailsService implements UserDetailsService {
     }
 
     private UserDetails loadUserDetailsByUsername(String username) {
-        return customerRepository.findByUsername(username.toLowerCase(Locale.ENGLISH))
+        return customerRepository.findOneByUsername(username.toLowerCase(Locale.ENGLISH))
                 .map(user -> buildUserDetails(user, username))
                 .orElseThrow(() ->
                         new UsernameNotFoundException(String.format(USER_NOT_FOUND_EXCEPTION, username))
