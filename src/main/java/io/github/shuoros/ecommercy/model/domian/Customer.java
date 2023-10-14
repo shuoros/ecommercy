@@ -35,7 +35,7 @@ public class Customer implements Serializable {
     private UUID id;
 
     @NotNull
-    @Pattern(regexp = "1")
+    @Pattern(regexp = "^(?>[a-zA-Z0-9!$&*+=?^_`{|}~.-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*)|(?>[_.@A-Za-z0-9-]+)$")
     @Size(min = 1, max = 50)
     @Column(length = 50, unique = true, nullable = false)
     private String username;
@@ -56,6 +56,6 @@ public class Customer implements Serializable {
     private boolean activated = false;
 
     @JdbcTypeCode(SqlTypes.JSON)
-    @Column(name = "system_parameter", columnDefinition = "json")
+    @Column(name = "roles", columnDefinition = "json")
     private Set<Role> roles;
 }

@@ -4,6 +4,7 @@ import io.github.shuoros.ecommercy.model.domian.Customer;
 import io.github.shuoros.ecommercy.model.enumeration.Role;
 import io.github.shuoros.ecommercy.repository.CustomerRepository;
 import io.github.shuoros.ecommercy.utils.EmailValidator;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -20,7 +21,10 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component("userDetailsService")
+@Slf4j
 public class AuthenticableUserDetailsService implements UserDetailsService {
+
+    private final static String USER_NOT_FOUND_EXCEPTION = "Customer %S was not found in the database";
 
     @Autowired
     private CustomerRepository customerRepository;
@@ -28,16 +32,27 @@ public class AuthenticableUserDetailsService implements UserDetailsService {
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        log.debug("Authenticating {}", username);
+
         if (EmailValidator.validate(username)) {
-            return getUserDetails(customerRepository.findOneByEmailIgnoreCase(username), username);
+            return loadUserDetailsByEmail(username);
         }
-        return getUserDetails(customerRepository.findOneByUsername(username.toLowerCase(Locale.ENGLISH)), username);
+        return loadUserDetailsByUsername(username);
     }
 
-    private UserDetails getUserDetails(Optional<Customer> optionalCustomer, String username) {
-        return optionalCustomer.map(user -> buildUserDetails(user, username))
+    private UserDetails loadUserDetailsByEmail(String username) {
+        return customerRepository.findByEmailIgnoreCase(username)
+                .map(user -> buildUserDetails(user, username))
                 .orElseThrow(() ->
-                        new UsernameNotFoundException("Customer " + username + " was not found in the database")
+                        new UsernameNotFoundException(String.format(USER_NOT_FOUND_EXCEPTION, username))
+                );
+    }
+
+    private UserDetails loadUserDetailsByUsername(String username) {
+        return customerRepository.findByUsername(username.toLowerCase(Locale.ENGLISH))
+                .map(user -> buildUserDetails(user, username))
+                .orElseThrow(() ->
+                        new UsernameNotFoundException(String.format(USER_NOT_FOUND_EXCEPTION, username))
                 );
     }
 

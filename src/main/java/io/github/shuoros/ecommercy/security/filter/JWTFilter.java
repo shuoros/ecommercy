@@ -20,7 +20,7 @@ import java.io.IOException;
 public class JWTFilter extends OncePerRequestFilter {
 
     private static final String AUTHORIZATION_HEADER = "Authorization";
-    private static final String COOKIE_NAME = "JSESSIONID";
+    private static final String COOKIE_NAME = "Authorization";
 
     @Autowired
     private JWTProvider jwtProvider;
@@ -40,9 +40,9 @@ public class JWTFilter extends OncePerRequestFilter {
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
             return bearerToken.substring(7);
         }
-        final Cookie jSessionId = WebUtils.getCookie(request, COOKIE_NAME);
-        if (jSessionId != null && StringUtils.hasText(jSessionId.getValue())) {
-            return jSessionId.getValue();
+        final Cookie cookieToken = WebUtils.getCookie(request, COOKIE_NAME);
+        if (cookieToken != null && StringUtils.hasText(cookieToken.getValue())) {
+            return cookieToken.getValue();
         }
         return null;
     }

@@ -10,7 +10,7 @@ import java.util.UUID;
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, UUID> {
 
-    Optional<Customer> findOneByEmailIgnoreCase(String email);
+    Optional<Customer> findByEmailIgnoreCase(String email);
 
-    Optional<Customer> findOneByUsername(String username);
+    Optional<Customer> findByUsername(String username);
 }

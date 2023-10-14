@@ -1,4 +1,4 @@
-package io.github.shuoros.ecommercy.controller;
+package io.github.shuoros.ecommercy.web.rest;
 
 import io.github.shuoros.ecommercy.model.domian.Product;
 import io.github.shuoros.ecommercy.repository.ProductRepository;

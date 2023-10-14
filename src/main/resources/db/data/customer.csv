@@ -1,2 +1,2 @@
 id;username;email;password_hash;activated;roles
-3e492393-eded-425f-98c4-05ead4c02d9e;soroush;soroush@ecommercy.com;$2a$10$.1COgyMeyXyoiRqnWRHunOURByewhYlxSbziYf6FIovft0VulD1U.;true;["ADMIN","CUSTOMER"]
+3e492393-eded-425f-98c4-05ead4c02d9e;soroush;soroush@ecommercy.com;$2a$10$VLayHx4e4jm8pn2q0Fa3Oe7oZjoXxRS341bv2V6S0OVl3FDLMeyya;true;["ADMIN","CUSTOMER"]
