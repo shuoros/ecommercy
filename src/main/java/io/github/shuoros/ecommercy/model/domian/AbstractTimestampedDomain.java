@@ -22,7 +22,7 @@ import java.time.Instant;
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties(value = {"createdBy", "createdDate", "lastModifiedBy", "lastModifiedDate"}, allowGetters = true)
-public class AbstractTimestampedDomain implements Serializable {
+public abstract class AbstractTimestampedDomain implements Serializable {
 
     @CreatedBy
     @Column(name = "created_by", nullable = false, length = 50, updatable = false)

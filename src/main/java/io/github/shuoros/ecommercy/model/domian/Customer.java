@@ -59,6 +59,7 @@ public class Customer extends AbstractTimestampedDomain implements Serializable 
     @Column(name = "last_name", length = 50)
     private String lastName;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Language language = Language.ENGLISH;
@@ -67,9 +68,9 @@ public class Customer extends AbstractTimestampedDomain implements Serializable 
     @Column(nullable = false)
     private boolean activated = false;
 
-    @Size(max = 36)
-    @Column(name = "activation_key", length = 36)
     @JsonIgnore
+    @Size(max = 36)
+    @Column(name = "activation_key")
     private UUID activationKey;
 
     @JdbcTypeCode(SqlTypes.JSON)
